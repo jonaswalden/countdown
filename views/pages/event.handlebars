@@ -1,0 +1,9 @@
+{{#with event}}
+	{{> clock start=start}}
+
+	<div class="event" style="color: {{textColor}}; background-image: url({{background.image}})">
+		<div class="event__body">
+			{{eventBody}}
+		</div>
+	</div>
+{{/with}}

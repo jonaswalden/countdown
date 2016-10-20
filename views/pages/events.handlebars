@@ -1,0 +1,16 @@
+<h1>Listing events</h1>
+
+<ul>
+	{{#each events}}
+		<li>
+			<h3>
+				<a href="/event/{{this.slug}}/">{{this.title}}</a>
+			</h3>
+			<time>{{this.start.dateTime}}</time>
+			<a href="/events/edit/{{this.slug}}/">Edit</a>
+		</li>
+	{{/each}}
+	<li>
+		<a href="/events/create/">+ create new event</a>
+	</li>
+</ul>

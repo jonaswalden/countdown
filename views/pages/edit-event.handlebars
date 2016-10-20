@@ -1,0 +1,33 @@
+<h1>
+	{{#if event}}
+		Editing {{event.title}}
+	{{else}}
+		New event
+	{{/if}}
+</h1>
+
+<form action="{{postPath}}" method="POST" enctype="multipart/form-data">
+	<div class="form__input-group">
+		<label for="input-title">Title</label>
+		<input id="input-title" name="title" type="text" value="{{event.title}}">
+	</div>
+
+	<div class="form__input-group">
+		<label for="input-body">Text</label>
+		<textarea id="input-body"  name="body-md">{{event.body.md}}</textarea>
+	</div>
+
+	<div class="form__input-group">
+		<label for="input-color">Text color</label>
+		<input id="input-color" name="textColor" type="color" value="{{event.textColor}}">
+	</div>
+
+	<div class="form__input-group">
+		<label for="input-background">Background image</label>
+		<input id="input-background" name="background-image" type="file" value="{{event.background.image}}">
+	</div>
+
+	<div class="form__actions">
+		<button>Save</button>
+	</div>
+</form>
