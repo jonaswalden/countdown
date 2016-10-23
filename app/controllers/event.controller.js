@@ -50,9 +50,8 @@ function renderSingle (req, res) {
 			res.render('pages/event', {
 				event,
 				helpers: {
-					compile: function (template, context) {
+					compile: function compileHelper (template, context) {
 						hbs.handlebars.registerPartial('clock', require('../../views/partials/clock'));
-						// return `<pre>${JSON.stringify(text)}</pre>`;
 						return hbs.handlebars.compile(template)(context);
 					}
 				}
