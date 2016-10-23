@@ -7,7 +7,7 @@ module.exports = {
 	renderEdit,
 	renderCreate,
 	renderSingle,
-	renderUndefinedSingle,
+	handleUndefinedSingle,
 	create,
 	seed,
 	clear
@@ -53,7 +53,7 @@ function renderSingle (req, res) {
 	);
 }
 
-function renderUndefinedSingle (req, res) {
+function handleUndefinedSingle (req, res) {
 	res.redirect('/events/');
 }
 

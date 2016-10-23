@@ -22,7 +22,7 @@ router.post('/events/create/', upload.single('background-image'), eventControlle
 
 router.get('/event/:eventSlug/', eventController.renderSingle);
 
-router.get('/event/', eventController.renderUndefinedSingle);
+router.get('/event/', eventController.handleUndefinedSingle);
 
 router.get('/seed/events/', eventController.seed);
 router.get('/clear/events/', eventController.clear);
