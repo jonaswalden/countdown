@@ -47,8 +47,16 @@ function renderSingle (req, res) {
 		(err, result) => {
 			if (err) return res.send(err);
 			const event = result[0];
-			let eventBody = hbs.handlebars.compile(event.body.html, {knownHelpers: {clock: true}})(event);
-			res.render('pages/event', {event, eventBody});
+			res.render('pages/event', {
+				event,
+				helpers: {
+					compile: function (template, context) {
+						hbs.handlebars.registerPartial('clock', require('../../views/partials/clock'));
+						// return `<pre>${JSON.stringify(text)}</pre>`;
+						return hbs.handlebars.compile(template)(context);
+					}
+				}
+			});
 		}
 	);
 }
