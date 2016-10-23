@@ -8,6 +8,7 @@ module.exports = makeModel('Event', {
 	},
 	start: {
 		dateTime: Date,
+		dateTimeString: String,
 		format: String
 	},
 	body: {

@@ -67,7 +67,8 @@ function handleUndefinedSingle (req, res) {
 function create (req, res) {
 	var event = req.body;
 	event.slug = event.title.toLowerCase();
-	event.start = {format: 'hh:mm', datetime: new Date(event.time)};
+	event.start = {format: 'hh:mm', dateTimeString: event.time};
+	event.start.dateTime = new Date(event.start.dateTimeString);
 	event.body = {md: event['body-md']};
 	event.body.html = parseBody(event.body.md, event);
 	event.background = {image: req.file ? req.file.path : ''};
