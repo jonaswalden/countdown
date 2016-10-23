@@ -65,25 +65,16 @@ function handleUndefinedSingle (req, res) {
 }
 
 function create (req, res) {
-	console.log('create');
-	console.log(req.body);
-	console.log(req.file.path);
-
 	var event = req.body;
 	event.slug = event.title.toLowerCase();
-	event.start = {datetime: 'dt', format: 'hh:mm'};
+	event.start = {format: 'hh:mm', datetime: new Date(event.time)};
 	event.body = {md: event['body-md']};
-	event.background = {
-		image: req.file ? req.file.path : ''
-	};
-
 	event.body.html = parseBody(event.body.md, event);
-	console.log('event.body.html:', event.body.html);
-	event = new Event(event);
+	event.background = {image: req.file ? req.file.path : ''};
 
+	event = new Event(event);
 	event.save((err) => {
 		if (err) return res.send(err);
-
 		res.redirect('/events/');
 	});
 }
