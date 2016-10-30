@@ -2,7 +2,6 @@
 
 const marked = require('marked');
 const translateInputToCode = makeTranslator(true);
-
 const translations = [
 	['{{clock}}', '{{> clock start=start}}']
 ];

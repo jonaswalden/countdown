@@ -4,7 +4,10 @@
 	"description": "0.1.0",
 	"main": "server.js",
 	"scripts": {
-		"test": "mocha test/**/*.js"
+    "lint": "eslint **/*.js",
+    "fixlint": "eslint --fix **/*.js",
+		"test": "npm run lint & mocha test/**/*.js",
+    "start": "nodemon"
 	},
 	"author": "Jonas Waldén",
 	"license": "ISC",
