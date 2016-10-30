@@ -1,15 +1,21 @@
 const exphbs = require('express-handlebars');
+const helpers = require('../helpers/handlebars');
 const hbs = exphbs.create({
 	defaultLayout: 'main'
 });
 
-Object.keys(hbs).forEach((key, index) => {
-	console.log(index, key);
-});
+module.exports = {
+	init,
+	hbs
+};
 
 function init (app) {
+	for (var name in helpers) {
+		if (helpers.hasOwnProperty(name)) {
+			hbs.handlebars.registerHelper(name, helpers[name]);
+		}
+	}
+
   app.engine('handlebars', hbs.engine);
   app.set('view engine', 'handlebars');
 }
-
-module.exports = {init, hbs};

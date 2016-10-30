@@ -1,7 +1,5 @@
 const marked = require('marked');
 const translateInputToCode = makeTranslator(true);
-// const {handlebars} = require("express-handlebars").create({partialsDir: '/views/partials/'});
-// const translateCodeToInput = makeTranslator(false);
 
 const translations = [
 	['{{clock}}', '{{> clock start=start}}']

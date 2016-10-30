@@ -1,5 +1,6 @@
 const {parse: parseBody} = require('../helpers/parse-body');
 const {hbs} = require('../setup/handlebars');
+const handlebarsHelpers = require('../helpers/handlebars');
 const Event = require('../models/event.model');
 
 module.exports = {
@@ -46,16 +47,7 @@ function renderSingle (req, res) {
 		{slug: req.params.eventSlug},
 		(err, result) => {
 			if (err) return res.send(err);
-			const event = result[0];
-			res.render('pages/event', {
-				event,
-				helpers: {
-					compile: function compileHelper (template, context) {
-						hbs.handlebars.registerPartial('clock', require('../../views/partials/clock'));
-						return hbs.handlebars.compile(template)(context);
-					}
-				}
-			});
+			res.render('pages/event', {event: result[0]});
 		}
 	);
 }
