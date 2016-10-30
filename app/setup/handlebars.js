@@ -1,6 +1,7 @@
 const exphbs = require('express-handlebars');
 const helpers = require('../helpers/handlebars');
 const hbs = exphbs.create({
+	extname: '.hbs',
 	defaultLayout: 'main',
 	helpers
 });
@@ -11,6 +12,6 @@ module.exports = {
 };
 
 function init (app) {
-  app.engine('handlebars', hbs.engine);
-  app.set('view engine', 'handlebars');
+  app.engine('.hbs', hbs.engine);
+  app.set('view engine', '.hbs');
 }
