@@ -2,7 +2,7 @@
 	"name": "countdown",
 	"version": "1.0.0",
 	"description": "0.1.0",
-	"main": "app/server.js",
+	"main": "app/app.js",
 	"scripts": {
     "lint": "eslint **/*.js",
     "fixlint": "eslint --fix **/*.js",
