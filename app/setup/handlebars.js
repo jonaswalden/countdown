@@ -14,6 +14,6 @@ module.exports = {
 };
 
 function init (app) {
-  app.engine('.hbs', hbs.engine);
-  app.set('view engine', '.hbs');
+	app.engine('.hbs', hbs.engine);
+	app.set('view engine', '.hbs');
 }

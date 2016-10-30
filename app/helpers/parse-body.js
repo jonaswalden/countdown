@@ -11,10 +11,9 @@ module.exports = {
 	parse,
 	parseMd,
 	parsePseudo
-	// parseHbs
 };
 
-function parse (body, locals) {
+function parse (body) {
 	return parsePseudo(parseMd(body));
 }
 
@@ -26,10 +25,6 @@ function parsePseudo (body) {
 	return translations.reduce(translateInputToCode, body);
 }
 
-// function parseHbs (hbs, locals) {
-// 	return handlebars.compile(hbs)(locals);
-// }
-
 function makeTranslator (inputToCode) {
 	const sourceIndex = +!inputToCode;
 	const targetIndex = +inputToCode;
@@ -38,5 +33,5 @@ function makeTranslator (inputToCode) {
 		const source = new RegExp(terms[sourceIndex], 'g');
 		const target = terms[targetIndex];
 		return result.replace(source, target);
-	}
+	};
 }

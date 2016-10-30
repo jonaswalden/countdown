@@ -1,24 +1,25 @@
 {
-  "name": "countdown",
-  "version": "1.0.0",
-  "description": "0.1.0",
-  "main": "server.js",
-  "scripts": {
-    "test": "mocha test/**/*.js"
-  },
-  "author": "Jonas Waldén",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv": "^2.0.0",
-    "express": "^4.14.0",
-    "express-handlebars": "^3.0.0",
-    "helmet": "^3.0.0",
-    "marked": "^0.3.6",
-    "mongoose": "^4.6.1",
-    "multer": "^1.2.0"
-  },
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^3.1.2"
-  }
+	"name": "countdown",
+	"version": "1.0.0",
+	"description": "0.1.0",
+	"main": "server.js",
+	"scripts": {
+		"test": "mocha test/**/*.js"
+	},
+	"author": "Jonas Waldén",
+	"license": "ISC",
+	"dependencies": {
+		"dotenv": "^2.0.0",
+		"express": "^4.14.0",
+		"express-handlebars": "^3.0.0",
+		"helmet": "^3.0.0",
+		"marked": "^0.3.6",
+		"mongoose": "^4.6.1",
+		"multer": "^1.2.0"
+	},
+	"devDependencies": {
+		"chai": "^3.5.0",
+		"eslint": "^3.9.0",
+		"mocha": "^3.1.2"
+	}
 }
