@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 
 mongoose.connect('mongodb://127.0.0.1:27017/countdown');
 
-app.use(express.static(`${__dirname}/assets`));
+app.use('/assets', express.static('app/assets'));
 app.use(helmet());
 app.use(routes);
 
@@ -19,3 +19,5 @@ setupHandlebars(app);
 app.listen(port, () => {
 	console.log(`app listening on ${port}`);
 });
+
+module.exports = app;

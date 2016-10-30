@@ -1,17 +1,9 @@
 'use strict';
 
 const express = require('express');
-const router = express.Router();
-const upload = require('multer')({dest: 'uploads/'});
-
-module.exports = router;
-
-router.use((req, res, next) => {
-	console.log('creaking, cracking');
-	next();
-});
-
+const upload = require('multer')({dest: '../../resources/temp/'});
 const eventController = require('./controllers/event.controller');
+const router = express.Router();
 
 // Event
 router.get('/events/', eventController.renderAll);
@@ -33,3 +25,5 @@ router.get('/clear/events/', eventController.clear);
 router.get('/', (req, res) => {
 	res.render('pages/home');
 });
+
+module.exports = router;
