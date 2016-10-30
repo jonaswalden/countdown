@@ -1,0 +1,13 @@
+body {
+	font-family: 'consolas';
+	max-width: 40em;
+	margin: 0 auto;
+}
+
+.form__input-group {
+	margin: 1em 0;
+}
+
+.form__input-group label {
+	display: block;
+}
