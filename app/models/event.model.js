@@ -1,3 +1,5 @@
+'use strict';
+
 const makeModel = require('../helpers/make-model');
 
 module.exports = makeModel('Event', {

@@ -1,3 +1,5 @@
+'use strict';
+
 const {parse: parseBody} = require('../helpers/parse-body');
 const {hbs} = require('../setup/handlebars');
 const Event = require('../models/event.model');
