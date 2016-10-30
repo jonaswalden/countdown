@@ -1,6 +1,5 @@
 const {parse: parseBody} = require('../helpers/parse-body');
 const {hbs} = require('../setup/handlebars');
-const handlebarsHelpers = require('../helpers/handlebars');
 const Event = require('../models/event.model');
 
 module.exports = {
@@ -37,9 +36,7 @@ function renderEdit (req, res) {
 }
 
 function renderCreate (req, res) {
-	res.render('pages/edit-event', {
-		postPath: req.path
-	});
+	res.render('pages/edit-event', {postPath: req.path});
 }
 
 function renderSingle (req, res) {
@@ -47,6 +44,7 @@ function renderSingle (req, res) {
 		{slug: req.params.eventSlug},
 		(err, result) => {
 			if (err) return res.send(err);
+
 			res.render('pages/event', {event: result[0]});
 		}
 	);
