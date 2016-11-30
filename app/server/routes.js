@@ -1,9 +1,10 @@
 'use strict';
 
 const express = require('express');
-const upload = require('multer')({dest: '../../resources/temp/'});
+const multer = require('multer');
 const eventController = require('./controllers/event.controller');
 const router = express.Router();
+const upload = multer({dest: '../../resources/temp/'});
 
 // Event
 router.get('/events/', eventController.renderAll);

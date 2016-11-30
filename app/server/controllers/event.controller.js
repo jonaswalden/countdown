@@ -1,7 +1,7 @@
 'use strict';
 
-const {parse: parseBody} = require('../helpers/parse-body');
 const Event = require('../models/event.model');
+const {parse: parseBody} = require('../helpers/parse-body');
 
 module.exports = {
 	renderAll,
@@ -57,7 +57,7 @@ function handleUndefinedSingle (req, res) {
 
 function create (req, res) {
 	var event = req.body;
-	event.slug = event.title.toLowerCase();
+	event.slug = event.title.toLowerCase().replace(/\s/g, '-');
 	event.start = {format: 'hh:mm', dateTimeString: event.time};
 	event.start.dateTime = new Date(event.start.dateTimeString);
 	event.body = {md: event['body-md']};
