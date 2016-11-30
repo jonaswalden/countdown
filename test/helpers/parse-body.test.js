@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const parseBody = require('../../app/server/helpers/parse-body');
+const parseBody = require('../../app/lib/helpers/parse-body');
 
 describe('parseMd', () => {
 	it('should compile markdown to markup', () => {
