@@ -1,28 +1,30 @@
 {
-	"name": "countdown",
-	"version": "1.0.0",
-	"description": "0.1.0",
-	"main": "app/app.js",
-	"scripts": {
+  "name": "countdown",
+  "version": "1.0.0",
+  "description": "0.1.0",
+  "main": "app/app.js",
+  "scripts": {
     "lint": "eslint **/*.js",
     "fixlint": "eslint --fix **/*.js",
-		"test": "npm run lint & mocha test/**/*.js",
+    "test": "npm run lint & mocha test/**/*.js",
+    "gm": "node scripts/test-image.js",
     "start": "nodemon"
-	},
-	"author": "Jonas Waldén",
-	"license": "ISC",
-	"dependencies": {
-		"dotenv": "^2.0.0",
-		"express": "^4.14.0",
-		"express-handlebars": "^3.0.0",
-		"helmet": "^3.0.0",
-		"marked": "^0.3.6",
-		"mongoose": "^4.6.1",
-		"multer": "^1.2.0"
-	},
-	"devDependencies": {
-		"chai": "^3.5.0",
-		"eslint": "^3.9.0",
-		"mocha": "^3.1.2"
-	}
+  },
+  "author": "Jonas Waldén",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "gm": "^1.23.0",
+    "helmet": "^3.0.0",
+    "marked": "^0.3.6",
+    "mongoose": "^4.6.1",
+    "multer": "^1.2.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.9.0",
+    "mocha": "^3.1.2"
+  }
 }

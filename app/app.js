@@ -3,8 +3,8 @@
 const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
-const {setup: setupRoutes} = require('./server/setup/routes');
-const {setup: setupViews} = require('./server/setup/views');
+const {setup: setupRoutes} = require('./lib/setup/routes');
+const {setup: setupViews} = require('./lib/setup/views');
 const app = express();
 const port = process.env.PORT || 3000;
 

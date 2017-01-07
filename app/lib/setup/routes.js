@@ -2,7 +2,7 @@
 
 const express = require('express');
 const multer = require('multer');
-const eventController = require('./controllers/event.controller');
+const eventController = require('../controllers/event.controller');
 
 module.exports = {
 	setup
