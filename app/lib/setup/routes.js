@@ -34,9 +34,9 @@ function getRouter () {
 		res.render('pages/home');
 	});
 
-	router.get('*', (req, res) => {
-		res.render('pages/404');
-	});
+	// router.get('*', (req, res) => {
+	// 	res.render('pages/404');
+	// });
 
 	return router;
 }

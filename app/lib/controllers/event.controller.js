@@ -9,6 +9,7 @@ module.exports = {
 	renderEdit,
 	renderSingle,
 	create,
+	update,
 	seed,
 	clear
 };
@@ -64,6 +65,10 @@ function create (req, res) {
 		if (err) return res.send(err);
 		res.redirect('/events/');
 	});
+}
+
+function update (req, res) {
+
 }
 
 function seed (req, res) {
