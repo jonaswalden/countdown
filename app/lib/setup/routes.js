@@ -22,7 +22,7 @@ function getRouter () {
 	router.post('/events/create/', upload.single('background-image'), eventController.create);
 
 	router.get('/event/:eventSlug/', eventController.renderSingle);
-	router.get('/event/edit/:eventSlug/', eventController.renderEdit);
+	router.get('/event/edit/:eventSlug/', eventController.renderUpdate);
 	router.put('/event/edit/:eventSlug/', upload.single('background-image'), eventController.update);
 
   // Debug/dev

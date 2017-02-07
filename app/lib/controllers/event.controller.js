@@ -6,7 +6,7 @@ const {parse: parseBody} = require('../helpers/parse-body');
 module.exports = {
 	renderAll,
 	renderCreate,
-	renderEdit,
+	renderUpdate,
 	renderSingle,
 	create,
 	update,
@@ -26,7 +26,7 @@ function renderCreate (req, res) {
 	res.render('pages/edit-event', {postPath: req.path});
 }
 
-function renderEdit (req, res) {
+function renderUpdate (req, res) {
 	Event.find(
 		{slug: req.params.eventSlug},
 		(err, docs) => {
