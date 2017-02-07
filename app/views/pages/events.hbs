@@ -7,10 +7,11 @@
 				<a href="/event/{{this.slug}}/">{{this.title}}</a>
 			</h3>
 			<time>{{this.start.dateTime}}</time>
-			<a href="/events/edit/{{this.slug}}/">Edit</a>
+			<a href="/event/edit/{{this.slug}}/">Edit</a>
 		</li>
 	{{/each}}
-	<li>
-		<a href="/events/create/">+ create new event</a>
-	</li>
 </ul>
+
+<p>
+	<a href="/events/create/">+ create new event</a>
+</p>

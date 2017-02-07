@@ -5,21 +5,24 @@ const {parse: parseBody} = require('../helpers/parse-body');
 
 module.exports = {
 	renderAll,
-	renderEdit,
 	renderCreate,
+	renderEdit,
 	renderSingle,
-	handleUndefinedSingle,
 	create,
 	seed,
 	clear
 };
 
 function renderAll (req, res) {
-	Event.find(function (err, events) {
+	Event.find((err, events) => {
 		if (err) return res.send(err);
 
 		res.render('pages/events', {events});
 	});
+}
+
+function renderCreate (req, res) {
+	res.render('pages/edit-event', {postPath: req.path});
 }
 
 function renderEdit (req, res) {
@@ -36,10 +39,6 @@ function renderEdit (req, res) {
 	);
 }
 
-function renderCreate (req, res) {
-	res.render('pages/edit-event', {postPath: req.path});
-}
-
 function renderSingle (req, res) {
 	Event.find(
 		{slug: req.params.eventSlug},
@@ -49,10 +48,6 @@ function renderSingle (req, res) {
 			res.render('pages/event', {event: result[0]});
 		}
 	);
-}
-
-function handleUndefinedSingle (req, res) {
-	res.redirect('/events/');
 }
 
 function create (req, res) {

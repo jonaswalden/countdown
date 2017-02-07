@@ -16,25 +16,26 @@ function getRouter () {
 	const upload = multer({dest: '../../resources/temp/'});
 	const router = express.Router();
 
-	// Event
+	// Events
 	router.get('/events/', eventController.renderAll);
-
-	router.get('/events/edit/:eventSlug/', eventController.renderEdit);
-	// router.post('/events/edit/:eventSlug', upload.single('background-image'), eventController.edit);
-
 	router.get('/events/create/', eventController.renderCreate);
 	router.post('/events/create/', upload.single('background-image'), eventController.create);
 
 	router.get('/event/:eventSlug/', eventController.renderSingle);
+	router.get('/event/edit/:eventSlug/', eventController.renderEdit);
+	router.put('/event/edit/:eventSlug/', upload.single('background-image'), eventController.update);
 
-	router.get('/event/', eventController.handleUndefinedSingle);
-
-	router.get('/seed/events/', eventController.seed);
-	router.get('/clear/events/', eventController.clear);
+  // Debug/dev
+	router.get('/events/seed/', eventController.seed);
+	router.get('/events/clear/', eventController.clear);
 
 	// Default
 	router.get('/', (req, res) => {
 		res.render('pages/home');
+	});
+
+	router.get('*', (req, res) => {
+		res.render('pages/404');
 	});
 
 	return router;
