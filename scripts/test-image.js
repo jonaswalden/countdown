@@ -1,14 +1,17 @@
 'use strict';
 
-const gm = require('gm').subClass({imageMagick: true});
-const root = '../resources';
+const gm = require('gm');
+const path = require('path');
 
-gm(`${root}/temp/test.jpg`).identify((err, data) => {
-	if (err) return console.error(err);
-	console.log(data);
-});
-// .noProfile()
-// .write(`${root}/upload/done.jpg`, (err) => {
-// 	if (err) return console.error(err);
-// 	console.log('success!');
-// });
+const root = path.join(__dirname, '..', './resources');
+
+gm(`${root}/temp/test.jpg`)
+	.identify((err, data) => {
+		if (err) return console.error(err);
+		console.log(data);
+	})
+	.noProfile()
+	.write(`${root}/uploads/done.jpg`, (err) => {
+		if (err) return console.error(err);
+		console.log('success!');
+	});
