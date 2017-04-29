@@ -7,6 +7,10 @@
 </h1>
 
 <form action="{{postPath}}" method="POST" enctype="multipart/form-data">
+	{{#if event}}
+		<input type="hidden" name="_method" value="PUT">
+	{{/if}}
+
 	<div class="form__input-group">
 		<label for="input-title">Title</label>
 		<input id="input-title" name="title" type="text" value="{{event.title}}">

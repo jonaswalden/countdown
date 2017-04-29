@@ -41,12 +41,12 @@ function renderUpdate (req, res) {
 }
 
 function renderSingle (req, res) {
-	Event.find(
+	Event.findOne(
 		{slug: req.params.eventSlug},
-		(err, result) => {
+		(err, event) => {
 			if (err) return res.send(err);
 
-			res.render('pages/event', {event: result[0]});
+			res.render('pages/event', {event});
 		}
 	);
 }
@@ -61,14 +61,25 @@ function create (req, res) {
 	event.background = {image: req.file ? req.file.path : ''};
 
 	event = new Event(event);
-	event.save((err) => {
+	event.save(err => {
 		if (err) return res.send(err);
 		res.redirect('/events/');
 	});
 }
 
 function update (req, res) {
+	Event.findOne(
+		{'slug': req.params.eventSlug},
+		(err, event) => {
+			if (err) return res.send(err);
 
+			Object.assign(event, req.body);
+			event.save(saveErr => {
+				if (saveErr) return res.send(saveErr);
+				res.redirect(`/event/${event.slug}/`);
+			});
+		}
+  );
 }
 
 function seed (req, res) {
@@ -84,21 +95,21 @@ function seed (req, res) {
 	Event.remove({}, () => {
 		for (var event of events) {
 			event = new Event(event);
-			insertions.push(event.save((err) => {
+			insertions.push(event.save(err => {
 				if (err) errors.push(err);
 			}));
 		}
 	});
 
 	Promise.all(insertions).then(() => {
-		if (errors.length) return res.send(errors);
+		if (errors.length) return res.send(new Error('error removing'));
 
 		res.redirect('/events/');
 	});
 }
 
 function clear (req, res) {
-	Event.remove({}, (err) => {
+	Event.remove({}, err => {
 		if (err) return res.send(err);
 
 		res.redirect('/events/');
