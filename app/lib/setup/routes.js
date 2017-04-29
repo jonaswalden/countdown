@@ -4,9 +4,7 @@ const express = require('express');
 const multer = require('multer');
 const eventController = require('../controllers/event.controller');
 
-module.exports = {
-	setup
-};
+module.exports = setup;
 
 function setup (app) {
 	app.use(getRouter());
@@ -18,15 +16,19 @@ function getRouter () {
 
 	// Events
 	router.get('/events/', eventController.renderAll);
+
 	router.get('/events/create/', eventController.renderCreate);
 	router.post('/events/create/', upload.single('background-image'), eventController.create);
 
+	// Event
 	router.get('/event/:eventSlug/', eventController.renderSingle);
+
 	router.get('/event/edit/:eventSlug/', eventController.renderUpdate);
 	router.put('/event/edit/:eventSlug/', upload.single('background-image'), eventController.update);
 
   // Debug/dev
 	router.get('/events/seed/', eventController.seed);
+
 	router.get('/events/clear/', eventController.clear);
 
 	// Default

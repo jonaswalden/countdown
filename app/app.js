@@ -3,8 +3,8 @@
 const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
-const {setup: setupRoutes} = require('./lib/setup/routes');
-const {setup: setupViews} = require('./lib/setup/views');
+const setupRoutes = require('./lib/setup/routes');
+const setupViews = require('./lib/setup/views');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -15,6 +15,12 @@ setupViews(app);
 
 app.use('/assets', express.static('app/assets'));
 app.use(helmet());
-app.listen(port, () => console.log(`app listening on ${port}`)); // eslint-disable-line no-console
+
+setupRoutes(app);
+setupViews(app);
+
+app.listen(port, () => {
+	console.log(`app listening on ${port}`); // eslint-disable-line no-console
+});
 
 module.exports = app;

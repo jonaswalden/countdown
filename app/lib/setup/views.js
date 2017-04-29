@@ -4,10 +4,8 @@ const exphbs = require('express-handlebars');
 const helpers = require('../helpers/handlebars');
 let hbs;
 
-module.exports = {
-	setup,
-	getEngine
-};
+module.exports = setup;
+module.exports.getEngine = getEngine;
 
 function setup (app) {
 	app.engine('hbs', getEngine().engine);
