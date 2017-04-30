@@ -3,7 +3,13 @@
 const makeModel = require('../helpers/make-model');
 
 module.exports = makeModel('Event', {
-	title: String,
+	background: {
+		image: String
+	},
+	body: {
+		md: String,
+		html: String
+	},
 	slug: {
 		type: String,
 		unique: true
@@ -13,12 +19,6 @@ module.exports = makeModel('Event', {
 		dateTimeString: String,
 		format: String
 	},
-	body: {
-		md: String,
-		html: String
-	},
-	background: {
-		image: String
-	},
-	textColor: String
+	textColor: String,
+	title: String
 });

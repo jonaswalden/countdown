@@ -73,10 +73,11 @@ function update (req, res) {
 		(err, event) => {
 			if (err) return res.send(err);
 
+			console.log('updating', req.body);
 			Object.assign(event, req.body);
 			event.save(saveErr => {
 				if (saveErr) return res.send(saveErr);
-				res.redirect(`/event/${event.slug}/`);
+				res.redirect(`/events/${event.slug}/`);
 			});
 		}
   );
