@@ -8,6 +8,7 @@ const setupViews = require('./lib/setup/views');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// TODO: make database contextual.. tests...
 mongoose.connect('mongodb://127.0.0.1:27017/countdown');
 
 setupRoutes(app);
