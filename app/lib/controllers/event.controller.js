@@ -1,7 +1,6 @@
 'use strict';
 
 const Event = require('../models/event.model');
-const {parse: parseBody} = require('../helpers/parse-body');
 
 module.exports = {
 	renderAll,
@@ -53,12 +52,10 @@ function renderSingle (req, res) {
 
 function create (req, res) {
 	var event = req.body;
-	event.slug = event.title.toLowerCase().replace(/\s/g, '-');
-	event.start = {format: 'hh:mm', dateTimeString: event.time};
-	event.start.dateTime = new Date(event.start.dateTimeString);
-	event.body = {md: event['body-md']};
-	event.body.html = parseBody(event.body.md, event);
-	event.background = {image: req.file ? req.file.path : ''};
+	event.start = Date.parse(event.time);
+	if (req.file && req.file.path) {
+		event.background = {image: req.file.path};
+	}
 
 	event = new Event(event);
 	event.save(err => {
@@ -87,10 +84,10 @@ function seed (req, res) {
 	var insertions = [];
 	var errors = [];
 	var events = [
-		{title: 'kladd', slug: 'kladd'},
-		{title: 'klidd', slug: 'klidd'},
-		{title: 'kledd', slug: 'kledd'},
-		{title: 'kludd', slug: 'kludd'}
+		{title: 'Event 1', start: Date('2018-01-01'), body: '# {{title}} 1'},
+		{title: 'Event 2', start: Date('2018-01-01'), body: '# {{title}} 2'},
+		{title: 'Event 3', start: Date('2018-01-01'), body: '# {{title}} 3'},
+		{title: 'Event 4', start: Date('2018-01-01'), body: '# {{title}} 4'}
 	];
 
 	Event.remove({}, () => {
@@ -104,7 +101,7 @@ function seed (req, res) {
 
 	Promise.all(insertions).then(() => {
 		if (errors.length) return res.send(new Error('error removing'));
-
+		console.log('seeding done');
 		res.redirect('/events/');
 	});
 }
