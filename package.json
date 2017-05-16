@@ -26,9 +26,10 @@
     "chai": "^3.5.0",
     "cheerio": "^0.22.0",
     "eslint": "^3.9.0",
-    "factory-lady": "^0.1.0",
+    "factory-girl": "^4.2.2",
     "mocha": "^3.1.2",
     "mocha-cakes-2": "^2.1.0",
+    "moment": "^2.18.1",
     "supertest": "^3.0.0"
   }
 }
