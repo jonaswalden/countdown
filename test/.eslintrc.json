@@ -6,11 +6,11 @@
 	},
 	"globals": {
 		"expect": false,
-		"Feature": false,
-		"Scenario": false,
-		"Given": false,
-		"And": false,
-		"When": false,
-		"Then": false
+		"feature": false,
+		"scenario": false,
+		"given": false,
+		"and": false,
+		"when": false,
+		"then": false
 	}
 }
