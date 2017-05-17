@@ -33,7 +33,7 @@ function getRouter () {
 
 	// Default
 	router.get('/', (req, res) => {
-		res.render('pages/home');
+		res.redirect('/events/');
 	});
 
 	// router.get('*', (req, res) => {
