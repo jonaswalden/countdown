@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const Event = require('../models/event.model');
 
 module.exports = {
@@ -22,7 +23,10 @@ function renderAll (req, res) {
 }
 
 function renderCreate (req, res) {
-	res.render('pages/edit-event', {postPath: req.path});
+	res.render('pages/edit-event', {
+		postPath: req.path,
+		creatingEvent: true
+	});
 }
 
 function renderUpdate (req, res) {
@@ -50,16 +54,13 @@ function renderSingle (req, res) {
 	);
 }
 
-function create (req, res) {
-	var event = req.body;
-	event.start = Date.parse(event.time);
-	if (req.file && req.file.path) {
-		event.background = {image: req.file.path};
-	}
+function create (req, res, next) {
+	const eventData = parseFormData(req.body);
+	const event = new Event(eventData);
 
-	event = new Event(event);
 	event.save(err => {
-		if (err) return res.send(err);
+		if (err && err.name) return res.redirect('/events/create/');
+		if (err) return next(err);
 		res.redirect('/events/');
 	});
 }
@@ -70,7 +71,6 @@ function update (req, res) {
 		(err, event) => {
 			if (err) return res.send(err);
 
-			console.log('updating', req.body);
 			Object.assign(event, req.body);
 			event.save(saveErr => {
 				if (saveErr) return res.send(saveErr);
@@ -112,4 +112,10 @@ function clear (req, res) {
 
 		res.redirect('/events/');
 	});
+}
+
+function parseFormData (formData) {
+	return Object.keys(formData).reduce((obj, keyPath) => {
+		return _.set(obj, keyPath, formData[keyPath]);
+	}, {});
 }

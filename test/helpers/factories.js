@@ -32,7 +32,6 @@ factory.define('event', Event, buildOptions => {
 	};
 	attrs.style.tickerFormat = 'HH:mm';
 
-	console.log('attrs', eventCount);
 	return attrs;
 });
 

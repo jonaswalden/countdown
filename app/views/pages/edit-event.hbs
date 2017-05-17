@@ -1,8 +1,8 @@
 <h1>
-	{{#if event}}
-		Editing {{event.title}}
-	{{else}}
+	{{#if creatingEvent}}
 		New event
+	{{else}}
+		Editing {{event.title}}
 	{{/if}}
 </h1>
 
@@ -12,31 +12,33 @@
 	{{/if}}
 
 	<div class="form__input-group">
-		<label for="input-title">Title</label>
+		<label for="input-title">What?</label>
 		<input id="input-title" name="title" type="text" value="{{event.title}}">
 	</div>
 
 	<div class="form__input-group">
-		<label for="input-title">Time</label>
-		<input id="input-time" name="time" type="text" value="{{event.start.dateTimeString}}" placeholder="Eg: 2011-04-02 11:00">
+		<label for="input-title">When?</label>
+		<input id="input-time" name="startString" type="text" value="{{event.startString}}" placeholder="Eg: 2011-04-02 11:00">
 	</div>
 
 	<div class="form__input-group">
-		<label for="input-body">Text</label>
-		<textarea id="input-body"  name="body-md">{{event.body.md}}</textarea>
+		<label for="input-body">Show me!</label>
+		<textarea id="input-body" name="body">{{event.body}}</textarea>
 	</div>
 
 	<div class="form__input-group">
-		<label for="input-color">Text color</label>
-		<input id="input-color" name="text-color" type="color" value="{{event.textColor}}">
+		<label for="input-text-color">Text</label>
+		<input id="input-text-color" name="style.text.color" type="color" value="{{event.style.text.color}}">
+		<label for="input-text-color" style="display: inline;">Color</label>
 	</div>
 
 	<div class="form__input-group">
-		<label for="input-background">Background image</label>
-		<input id="input-background" name="background-image" type="file" value="{{event.background.image}}">
+		<label for="input-background-image">Background</label>
+		<input id="input-background-color" name="style.background.color" type="color" value="{{event.style.background.color}}">
+		<input id="input-background-image" name="style.background.image" type="file" value="{{event.style.background.image}}">
 	</div>
 
 	<div class="form__actions">
-		<button>Save</button>
+		<button>Go!</button>
 	</div>
 </form>

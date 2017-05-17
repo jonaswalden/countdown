@@ -32,8 +32,7 @@ const eventSchema = new mongoose.Schema({
 	slug: {
 		type: String,
 		unique: true,
-		required: true,
-		set: setSlugFromTitle
+		required: true
 	},
 	start: {
 		type: Date,
@@ -43,7 +42,8 @@ const eventSchema = new mongoose.Schema({
 	style: eventStyleSchema,
 	title: {
 		type: String,
-		required: true
+		required: true,
+		set: setSlugFromTitle
 	}
 });
 
@@ -65,21 +65,18 @@ module.exports = Event;
 
 
 function getStartStringFromStart () {
-	console.log('getStartStringFromStart', this.start);
 	return moment(this.start).format('YYYY-MM-DD HH:mm');
 }
 
 function setStartFromStartString (startString) {
 	this.start = moment.utc(startString).toDate();
-	console.log('setStartFromStartString', startString. this.start);
 }
 
 function getBodyMarkup () {
-	console.log('getBodyMarkup');
 	return parseMd(this.body);
 }
 
 function setSlugFromTitle (title) {
-	console.log('setSlugFromTitle', title);
-	return slugify(title);
+	this.slug = slugify(title);
+	return title;
 }
