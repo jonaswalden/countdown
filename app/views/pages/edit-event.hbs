@@ -1,14 +1,14 @@
 <h1>
-	{{#if creatingEvent}}
-		New event
-	{{else}}
+	{{#if editingEvent}}
 		Editing {{event.title}}
+	{{else}}
+		New event
 	{{/if}}
 </h1>
 
 <form action="{{postPath}}" method="POST" enctype="multipart/form-data">
-	{{#if event}}
-		<input type="hidden" name="_method" value="PUT">
+	{{#if editingEvent}}
+		<input id="method-override" name="_method" type="hidden" value="PUT">
 	{{/if}}
 
 	<div class="form__input-group">

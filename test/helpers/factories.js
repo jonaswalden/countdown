@@ -35,5 +35,4 @@ factory.define('event', Event, buildOptions => {
 	return attrs;
 });
 
-
 module.exports = factory;

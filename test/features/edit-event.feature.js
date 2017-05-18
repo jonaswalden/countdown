@@ -7,19 +7,19 @@ const app = require('../../app/app');
 const factories = require('../helpers/factories');
 const Event = require('../../app/lib/models/event.model');
 
-feature('Create event', () => {
+feature('Edit event', () => {
 	before(() => Event.remove({}));
 
-	scenario('User creates an event', () => {
-		let $, event, postPath;
+	scenario('User edits an event', () => {
+		let $, event, postPath, changedBody;
 
-		before(async () => {
-			event = await factories.build('event');
+		given('we have an event', async () => {
+			event = await factories.create('event');
 		});
 
-		when('the user visits the create event page', done => {
+		when('the user visits the edit event page', done => {
 			request(app)
-				.get('/events/create/')
+				.get(`/event/edit/${event.slug}/`)
 				.expect(200)
 				.end((err, res) => {
 					if (err) return done(err);
@@ -34,12 +34,22 @@ feature('Create event', () => {
 			postPath = form.attr('action');
 		});
 
-		when('the user posts the form', done => {
+		and('there should be a method-override field', () => {
+			const $methodOverride = $('#method-override');
+			expect($methodOverride.length).to.equal(1);
+			expect($methodOverride.val()).to.equal('PUT');
+		});
+
+		when('the user makes a change', () => {
+			changedBody = event.body + ' change from test';
+		});
+
+		and('posts the form', done => {
 			request(app)
-				.post(postPath)
+				.put(postPath)
 				.field('title', event.title)
 				.field('startString', event.startString)
-				.field('body', event.body)
+				.field('body', changedBody)
 				.field('style.text.color', event.style.text.color)
 				.field('style.background.color', event.style.background.color)
 				.field('style.background.image', event.style.background.image)
@@ -51,7 +61,7 @@ feature('Create event', () => {
 				if (err) return done(err);
 
 				expect(dbEvents.length).to.equal(1);
-				expect(dbEvents[0]).to.have.property('title', event.title);
+				expect(dbEvents[0].body).to.contain('change from test');
 				done();
 			});
 		});

@@ -23,10 +23,7 @@ function renderAll (req, res) {
 }
 
 function renderCreate (req, res) {
-	res.render('pages/edit-event', {
-		postPath: req.path,
-		creatingEvent: true
-	});
+	res.render('pages/edit-event', {postPath: req.path});
 }
 
 function renderUpdate (req, res) {
@@ -37,6 +34,7 @@ function renderUpdate (req, res) {
 
 			res.render('pages/edit-event', {
 				postPath: req.path,
+				editingEvent: true,
 				event: docs[0]
 			});
 		}
@@ -70,11 +68,12 @@ function update (req, res) {
 		{'slug': req.params.eventSlug},
 		(err, event) => {
 			if (err) return res.send(err);
+			const eventData = parseFormData(req.body);
+			Object.assign(event, eventData);
 
-			Object.assign(event, req.body);
-			event.save(saveErr => {
+			event.save((saveErr, savedEvent) => {
 				if (saveErr) return res.send(saveErr);
-				res.redirect(`/events/${event.slug}/`);
+				res.redirect(`/events/${savedEvent.slug}/`);
 			});
 		}
   );
