@@ -8,7 +8,7 @@
     "fixlint": "eslint --fix **/*.js",
     "test": "npm run lint & mocha test/**/*.js",
     "gm": "node scripts/test-image.js",
-    "start": "nodemon"
+    "start": "nodemon --ignore resources/*"
   },
   "author": "Jonas Waldén",
   "license": "ISC",
@@ -21,7 +21,8 @@
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "mongoose": "^4.6.1",
-    "multer": "^1.2.0"
+    "multer": "^1.2.0",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",

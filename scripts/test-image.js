@@ -1,17 +1,20 @@
 'use strict';
 
-const gm = require('gm');
-const path = require('path');
+const handleImage = require('../app/lib/helpers/handle-image');
 
-const root = path.join(__dirname, '..', './resources');
+test();
 
-gm(`${root}/temp/test.jpg`)
-	.identify((err, data) => {
-		if (err) return console.error(err);
-		console.log(data);
-	})
-	.noProfile()
-	.write(`${root}/uploads/done.jpg`, (err) => {
-		if (err) return console.error(err);
-		console.log('success!');
-	});
+async function test () {
+	const file = {
+		path: 'C:\\dev\\countdown\\ssr\\resources\\uploads\\user-image.jpg',
+		originalname: 'user-image.jpg'
+	};
+
+	try {
+		const resourceId = await handleImage(file);
+		console.log('success', resourceId);
+	}
+	catch (err) {
+		console.error(err);
+	}
+}

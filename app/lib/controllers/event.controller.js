@@ -1,6 +1,8 @@
 'use strict';
 
 const _ = require('lodash');
+
+const handleImage = require('../helpers/handle-image');
 const Event = require('../models/event.model');
 
 module.exports = {
@@ -52,8 +54,8 @@ function renderSingle (req, res) {
 	);
 }
 
-function create (req, res, next) {
-	const eventData = parseFormData(req.body);
+async function create (req, res, next) {
+	const eventData = await handleFormData(req);
 	const event = new Event(eventData);
 
 	event.save(err => {
@@ -63,12 +65,13 @@ function create (req, res, next) {
 	});
 }
 
-function update (req, res) {
+async function update (req, res) {
+	const eventData = await handleFormData(req);
+
 	Event.findOne(
 		{'slug': req.params.eventSlug},
-		(err, event) => {
+		async (err, event) => {
 			if (err) return res.send(err);
-			const eventData = parseFormData(req.body);
 			Object.assign(event, eventData);
 
 			event.save((saveErr, savedEvent) => {
@@ -111,6 +114,23 @@ function clear (req, res) {
 
 		res.redirect('/events/');
 	});
+}
+
+async function handleFormData (req) {
+	// console.log(1);
+	// const eventData = parseFormData(req.body);
+	const eventData = {};
+	console.log(2);
+	console.log(eventData);
+	if (req.file) {
+		console.log(3, req.file);
+		const imageId = await handleImage(req.file);
+		console.log(4);
+		console.log(imageId);
+		_.set(eventData, 'style.background.image', imageId);
+	} else console.log('no files');
+
+	return eventData;
 }
 
 function parseFormData (formData) {
