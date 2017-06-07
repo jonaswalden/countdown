@@ -21,19 +21,21 @@ function processImage (file, resolve, reject) {
 
 	const id = uuid();
 	const extension = path.extname(file.originalname);
-	const filePath = getImagePath(id, 'original' + extension);
-	const dirPath = getResourceDir(imageRoot, id);
-	const writePath = getResourceDir(filePath);
+	const imagePath = getImagePath(id, 'original' + extension);
+	const imageDirPath = getResourceDir(imageRoot, id);
+	const writePath = getResourceDir(imagePath);
 
-	return writeDir(writeImage, () => {
-		console.log('success!');
-		resolve(filePath);
+	return writeDir(() => {
+		writeImage(() => {
+			console.log('success!');
+			resolve(imagePath);
+		});
 	});
 
-	function writeDir (done, callback) {
-		fs.mkdir(dirPath, 484, (err) => {
+	function writeDir (done) {
+		fs.mkdir(imageDirPath, 484, (err) => {
 			if (err) return reject(err);
-			done(callback);
+			done();
 		});
 	}
 
@@ -42,18 +44,20 @@ function processImage (file, resolve, reject) {
 			.noProfile()
 			.write(writePath, (err) => {
 				if (err) return rollback(err);
-				cleanTemp();
+				setImmediate(cleanTemp);
 				done();
 			});
 	}
 
 	function rollback (imageErr) {
-		fs.rmdir(dirPath);
+		fs.rmdir(imageDirPath);
 		reject(imageErr);
 	}
 
 	function cleanTemp () {
-		fs.unlink(file.path);
+		fs.unlink(file.path, err => {
+			if (err) console.error(err);
+		});
 	}
 }
 

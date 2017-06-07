@@ -6,20 +6,19 @@ const handleImage = require('../helpers/handle-image');
 const Event = require('../models/event.model');
 
 module.exports = {
+	clear,
+	create,
 	renderAll,
 	renderCreate,
-	renderUpdate,
 	renderSingle,
-	create,
-	update,
+	renderUpdate,
 	seed,
-	clear
+	update
 };
 
 function renderAll (req, res) {
 	Event.find((err, events) => {
 		if (err) return res.send(err);
-
 		res.render('pages/events', {events});
 	});
 }
@@ -48,21 +47,27 @@ function renderSingle (req, res) {
 		{slug: req.params.eventSlug},
 		(err, event) => {
 			if (err) return res.send(err);
-
 			res.render('pages/event', {event});
 		}
 	);
 }
 
 async function create (req, res, next) {
-	const eventData = await handleFormData(req);
-	const event = new Event(eventData);
+	try {
+		const eventData = await handleFormData(req);
+		const event = new Event(eventData);
+		event.save(postCreate);
+	}
+	catch (err) {
+		console.log('err', err);
+		next(err);
+	}
 
-	event.save(err => {
+	function postCreate (err) {
 		if (err && err.name) return res.redirect('/events/create/');
 		if (err) return next(err);
 		res.redirect('/events/');
-	});
+	}
 }
 
 async function update (req, res) {
@@ -83,9 +88,9 @@ async function update (req, res) {
 }
 
 function seed (req, res) {
-	var insertions = [];
-	var errors = [];
-	var events = [
+	const insertions = [];
+	const errors = [];
+	const events = [
 		{title: 'Event 1', start: Date('2018-01-01'), body: '# {{title}} 1'},
 		{title: 'Event 2', start: Date('2018-01-01'), body: '# {{title}} 2'},
 		{title: 'Event 3', start: Date('2018-01-01'), body: '# {{title}} 3'},
@@ -93,7 +98,7 @@ function seed (req, res) {
 	];
 
 	Event.remove({}, () => {
-		for (var event of events) {
+		for (let event of events) {
 			event = new Event(event);
 			insertions.push(event.save(err => {
 				if (err) errors.push(err);
@@ -111,30 +116,18 @@ function seed (req, res) {
 function clear (req, res) {
 	Event.remove({}, err => {
 		if (err) return res.send(err);
-
 		res.redirect('/events/');
 	});
 }
 
 async function handleFormData (req) {
-	// console.log(1);
-	// const eventData = parseFormData(req.body);
-	const eventData = {};
-	console.log(2);
-	console.log(eventData);
+	const eventData = Object.assign({}, req.body);
+
 	if (req.file) {
-		console.log(3, req.file);
-		const imageId = await handleImage(req.file);
-		console.log(4);
-		console.log(imageId);
-		_.set(eventData, 'style.background.image', imageId);
-	} else console.log('no files');
+		eventData[req.file.fieldname] = await handleImage(req.file);
+	}
 
-	return eventData;
-}
-
-function parseFormData (formData) {
-	return Object.keys(formData).reduce((obj, keyPath) => {
-		return _.set(obj, keyPath, formData[keyPath]);
+	return Object.keys(eventData).reduce((formData, keyPath) => {
+		return _.set(formData, keyPath, eventData[keyPath]);
 	}, {});
 }
