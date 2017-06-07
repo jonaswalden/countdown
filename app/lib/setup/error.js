@@ -1,13 +1,8 @@
 'use strict';
 
-const express = require('express');
-const helmet = require('helmet');
-
 module.exports = setup;
 
 function setup (app) {
-	app.use('/assets', express.static('app/assets'));
-	app.use(helmet());
 	app.use(handleError);
 }
 
