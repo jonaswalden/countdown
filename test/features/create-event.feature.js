@@ -42,7 +42,7 @@ feature('Create event', () => {
 				.field('body', event.body)
 				.field('style.text.color', event.style.text.color)
 				.field('style.background.color', event.style.background.color)
-				.field('style.background.image', event.style.background.image)
+				.attach('style.background.image', event.style.background.image)
 				.expect(302, done);
 		});
 

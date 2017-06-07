@@ -24,11 +24,11 @@ factory.define('event', Event, buildOptions => {
 	attrs.slug = `event-${eventCount}`;
 	attrs.style = {};
 	attrs.style.background = {
-		image: '/path/to/image.jpg',
+		image: './test/data/test-image.jpg',
 		color: 'black'
 	};
 	attrs.style.text = {
-		color: 'black'
+		color: 'white'
 	};
 	attrs.style.tickerFormat = 'HH:mm';
 
