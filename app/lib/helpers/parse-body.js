@@ -1,6 +1,7 @@
 'use strict';
 
 const marked = require('marked');
+
 const translateInputToCode = makeTranslator(true);
 const translations = [
 	['{{ticker}}', '{{> clock start=start}}']
