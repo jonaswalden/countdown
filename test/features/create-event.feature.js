@@ -43,7 +43,7 @@ feature('Create event', () => {
 				.field('style.text.color', event.style.text.color)
 				.field('style.background.color', event.style.background.color)
 				.attach('style.background.image', event.style.background.image)
-				.expect(302, done);
+				.expect(200, done);
 		});
 
 		then('event gets persisted to the database', done => {
