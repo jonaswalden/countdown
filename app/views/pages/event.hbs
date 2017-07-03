@@ -1,7 +1,15 @@
 {{#with event}}
-	<div class="event" style="color: {{textColor}}; background-image: url({{background.image}})">
+	<div
+		class="event"
+		style="
+			color: {{style.text.color}};
+			background-image: url({{style.background.image}});
+			background-color: {{style.background.color}};
+		">
 		<div class="event__body">
-		{{{compileEventBody body.html this}}}
+			{{{compileEventBody bodyMarkup this}}}
+			<hr>
+			{{bodyMarkup}}
 		</div>
 	</div>
 {{/with}}

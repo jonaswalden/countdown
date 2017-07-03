@@ -4,7 +4,7 @@ const marked = require('marked');
 
 const translateInputToCode = makeTranslator(true);
 const translations = [
-	['{{ticker}}', '{{> clock start=start}}']
+	['{{ticker}}', '{{> ticker start=start format=style.tickerFormat}}']
 ];
 
 module.exports = {
