@@ -13,7 +13,7 @@ module.exports = handleImage;
 module.exports.getImagePath = getImagePath;
 
 function handleImage (file) {
-	return new Promise(processImage.bind(null, file));
+	return new Promise((rs, rj) => processImage(file, rs, rj));
 }
 
 function processImage (file, resolve, reject) {

@@ -13,8 +13,11 @@ feature('Edit event', () => {
 	scenario('User edits an event', () => {
 		let $, event, postPath, changedBody;
 
-		given('we have an event', async () => {
-			event = await factories.create('event');
+		given('we have an event', done => {
+			factories.attrs('event').then(_event => {
+				event = new Event(_event);
+				event.save(done);
+			});
 		});
 
 		when('the user visits the edit event page', done => {
@@ -37,7 +40,17 @@ feature('Edit event', () => {
 		and('there should be a method-override field', () => {
 			const $methodOverride = $('#method-override');
 			expect($methodOverride.length).to.equal(1);
+			expect($methodOverride.attr('name')).to.equal('_method');
 			expect($methodOverride.val()).to.equal('PUT');
+			expect($methodOverride.attr('type')).to.equal('hidden');
+		});
+
+		and('there should be an id field', () => {
+			const $id = $('#event-id');
+			expect($id.length).to.equal(1);
+			expect($id.attr('name')).to.equal('_id');
+			expect($id.val()).to.equal(event._id);
+			expect($id.attr('type')).to.equal('hidden');
 		});
 
 		when('the user makes a change', () => {
@@ -52,15 +65,16 @@ feature('Edit event', () => {
 				.field('body', changedBody)
 				.field('style.text.color', event.style.text.color)
 				.field('style.background.color', event.style.background.color)
-				.field('style.background.image', event.style.background.image)
+				.field('backgroundImage', event.backgroundImage)
 				.expect(302, done);
 		});
 
 		then('event gets persisted to the database', done => {
-			Event.find({'slug': event.slug}, (err, dbEvents) => {
+			Event.find({}, (err, dbEvents) => {
 				if (err) return done(err);
 
 				expect(dbEvents.length).to.equal(1);
+				expect(dbEvents[0].title).to.contain(event.title);
 				expect(dbEvents[0].body).to.contain('change from test');
 				done();
 			});

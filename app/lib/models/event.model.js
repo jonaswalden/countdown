@@ -1,9 +1,11 @@
 'use strict';
 
+const _ = require('lodash');
 const moment = require('moment');
 const mongoose = require('mongoose');
 
-const {parseMd} = require('../helpers/parse-body');
+const handleImage = require('../helpers/handle-image');
+const {parse: parseBody} = require('../helpers/parse-body');
 const slugify = require('../helpers/slugify');
 
 const backgroundStyleSchema = new mongoose.Schema({
@@ -56,13 +58,16 @@ eventSchema
 	.virtual('bodyMarkup')
 	.get(getBodyMarkup);
 
+eventSchema
+	.virtual('backgroundImage')
+	.set(setBackgroundImageFromFile);
+
 eventSchema.set('toObject', { getters: true, setters: true, virtuals: true });
 eventSchema.set('toJSON', { getters: true, setters: true, virtuals: true });
 
 const Event = mongoose.model('Event', eventSchema);
 
 module.exports = Event;
-
 
 function getStartStringFromStart () {
 	return moment(this.start).format('YYYY-MM-DD HH:mm');
@@ -73,10 +78,14 @@ function setStartFromStartString (startString) {
 }
 
 function getBodyMarkup () {
-	return parseMd(this.body);
+	return parseBody(this.body);
 }
 
 function setSlugFromTitle (title) {
 	this.slug = slugify(title);
 	return title;
+}
+
+async function setBackgroundImageFromFile (imageFile) {
+	_.set(this, 'style.background.image', await handleImage(imageFile));
 }

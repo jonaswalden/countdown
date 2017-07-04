@@ -16,21 +16,17 @@ factory.define('event', Event, buildOptions => {
 
 		{{ticker}}
 	`;
-	attrs.start = () => new Date(nextYear, 3, 2, 10, 0);
+	attrs.startString = `${nextYear}-04-02 10:00`;
 	attrs.title = `Event No ${eventCount}`;
 
 	if (buildOptions.minimal) return attrs;
 
 	attrs.slug = `event-${eventCount}`;
 	attrs.style = {};
-	attrs.style.background = {
-		image: './test/data/test-image.jpg',
-		color: 'black'
-	};
-	attrs.style.text = {
-		color: 'white'
-	};
+	attrs.style.background = {color: 'black'};
+	attrs.style.text = {color: 'white'};
 	attrs.style.tickerFormat = 'HH:mm';
+	attrs.backgroundImage = './test/data/test-image.jpg';
 
 	return attrs;
 });

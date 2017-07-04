@@ -2,7 +2,6 @@
 
 const _ = require('lodash');
 
-const handleImage = require('../helpers/handle-image');
 const Event = require('../models/event.model');
 
 module.exports = {
@@ -47,44 +46,35 @@ function renderSingle (req, res) {
 		{slug: req.params.eventSlug},
 		(err, event) => {
 			if (err) return res.send(err);
+			console.log(event);
 			res.render('pages/event', {event});
 		}
 	);
 }
 
-async function create (req, res, next) {
-	try {
-		const eventData = await handleFormData(req);
-		const event = new Event(eventData);
-		event.save(postCreate);
-	}
-	catch (err) {
-		console.log('err', err);
-		next(err);
-	}
-
-	function postCreate (err) {
+function create (req, res, next) {
+	const eventData = handleFormData(req);
+	const event = new Event(eventData);
+	event.save(err => {
 		if (err && err.name) return res.redirect('/events/create/');
 		if (err) return next(err);
 		res.redirect('/events/');
-	}
+	});
 }
 
-async function update (req, res) {
-	const eventData = await handleFormData(req);
+function update (req, res, next) {
+	const {_id} = req.body;
+	if (!_id) return next(new Error('missing event id'));
 
-	Event.findOne(
-		{'slug': req.params.eventSlug},
-		async (err, event) => {
-			if (err) return res.send(err);
-			Object.assign(event, eventData);
+	Event.findById(_id, (err, event) => {
+		if (err) return next(err);
 
-			event.save((saveErr, savedEvent) => {
-				if (saveErr) return res.send(saveErr);
-				res.redirect(`/events/${savedEvent.slug}/`);
-			});
-		}
-  );
+		handleFormData(req, event);
+		event.save((saveErr, savedEvent) => {
+			if (saveErr) return next(saveErr);
+			res.redirect(`/events/${savedEvent.slug}/`);
+		});
+	});
 }
 
 function seed (req, res) {
@@ -120,14 +110,15 @@ function clear (req, res) {
 	});
 }
 
-async function handleFormData (req) {
+function handleFormData (req, dest = {}) {
 	const eventData = Object.assign({}, req.body);
 
 	if (req.file) {
-		eventData[req.file.fieldname] = await handleImage(req.file);
-	}
+		console.log('file present', req.file);
+		eventData[req.file.fieldname] = req.file;
+	} else console.log('no file bietch');
 
 	return Object.keys(eventData).reduce((formData, keyPath) => {
 		return _.set(formData, keyPath, eventData[keyPath]);
-	}, {});
+	}, dest);
 }

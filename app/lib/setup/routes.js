@@ -14,7 +14,7 @@ function setup (app) {
 
 function getRouter () {
 	const router = express.Router();
-	const handleBackgroundImage = fileHandler.single('style.background.image');
+	const handleBackgroundImage = fileHandler.single('backgroundImage');
 
 	// Events
 	router.get('/events/', eventController.renderAll);

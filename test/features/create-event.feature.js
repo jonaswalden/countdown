@@ -11,10 +11,10 @@ feature('Create event', () => {
 	before(() => Event.remove({}));
 
 	scenario('User creates an event', () => {
-		let $, event, postPath;
+		let $, eventData, postPath;
 
 		before(async () => {
-			event = await factories.build('event');
+			eventData = await factories.attrs('event');
 		});
 
 		when('the user visits the create event page', done => {
@@ -37,21 +37,22 @@ feature('Create event', () => {
 		when('the user posts the form', done => {
 			request(app)
 				.post(postPath)
-				.field('title', event.title)
-				.field('startString', event.startString)
-				.field('body', event.body)
-				.field('style.text.color', event.style.text.color)
-				.field('style.background.color', event.style.background.color)
-				.attach('style.background.image', event.style.background.image)
+				.field('title', eventData.title)
+				.field('startString', eventData.startString)
+				.field('body', eventData.body)
+				.field('style.text.color', eventData.style.text.color)
+				.field('style.background.color', eventData.style.background.color)
+				.attach('backgroundImage', eventData.backgroundImage)
 				.expect(302, done);
 		});
 
 		then('event gets persisted to the database', done => {
-			Event.find({'slug': event.slug}, (err, dbEvents) => {
+			console.log('query- slug:', eventData.slug);
+			Event.find({}, (err, dbEvents) => {
 				if (err) return done(err);
 
 				expect(dbEvents.length).to.equal(1);
-				expect(dbEvents[0]).to.have.property('title', event.title);
+				expect(dbEvents[0]).to.have.property('title', eventData.title);
 				done();
 			});
 		});

@@ -9,6 +9,7 @@
 <form action="{{postPath}}" method="POST" enctype="multipart/form-data">
 	{{#if editingEvent}}
 		<input id="method-override" name="_method" type="hidden" value="PUT">
+		<input id="event-id" name="_id" type="hidden" value="{{event._id}}">
 	{{/if}}
 
 	<div class="form__input-group">
@@ -35,7 +36,7 @@
 	<div class="form__input-group">
 		<label for="input-background-image">Background</label>
 		<input id="input-background-color" name="style.background.color" type="color" value="{{event.style.background.color}}">
-		<input id="input-background-image" name="style.background.image" type="file" value="{{event.style.background.image}}">
+		<input id="input-background-image" name="backgroundImage" type="file">
 	</div>
 
 	<div class="form__actions">
