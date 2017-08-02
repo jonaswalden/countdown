@@ -22,7 +22,7 @@ const eventStyleSchema = new mongoose.Schema({
 	text: textStyleSchema,
 	tickerFormat: {
 		type: String,
-		default: 'HH:mm'
+		default: '{{hh}}:{{mm}}'
 	}
 });
 
@@ -87,5 +87,10 @@ function setSlugFromTitle (title) {
 }
 
 async function setBackgroundImageFromFile (imageFile) {
-	_.set(this, 'style.background.image', await handleImage(imageFile));
+	try {
+		_.set(this, 'style.background.image', await handleImage(imageFile));
+	}
+	catch (err) {
+		console.error('Error setting event background image', err);
+	}
 }

@@ -13,6 +13,7 @@ const middleware = multer({storage});
 
 module.exports = middleware;
 module.exports.getResourceDir = getResourceDir;
+module.exports.uploadsDir = uploadsDir;
 
 function getResourceDir (...paths) {
 	return path.join(resourceDir, ...paths);
