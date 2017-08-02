@@ -2,23 +2,29 @@
 
 const exphbs = require('express-handlebars');
 
-const localHbs = exphbs.create();
-
-localHbs.handlebars.registerPartial('ticker', require('../../views/partials/ticker'));
-localHbs.handlebars.registerHelper('dateTime', dateTime);
+const {TimeLeft} = require('./ticker');
+const tickerPartial = require('../../views/partials/ticker');
 
 module.exports = {
-	dateTime,
-	compileEventBody
+	timeLeft,
+	compileEventBody: CompileEventBody()
 };
 
-function dateTime (date, format) {
-	if (!date || !format) return 'error parsing date';
-	const timeLeft = (date.getTime() - Date.now()) / 1000 / 60;
-	return timeLeft;
+function timeLeft (date, format) {
+	if (!date || !format) return console.error('timeLeft', date, format);
+	const {timeString} = TimeLeft(date, format)();
+	return timeString;
 }
 
-function compileEventBody (template, context) {
-	if (!template  || !context) return 'error compiling body';
-	return localHbs.handlebars.compile(template)(context);
+function CompileEventBody () {
+	const localHbs = exphbs.create();
+	localHbs.handlebars.registerPartial('ticker', tickerPartial);
+	localHbs.handlebars.registerHelper('timeLeft', timeLeft);
+
+	return compile;
+
+	function compile (template, context) {
+		if (!template  || !context) return console.error('compileEventBody', template, context);
+		return localHbs.handlebars.compile(template)(context);
+	}
 }
