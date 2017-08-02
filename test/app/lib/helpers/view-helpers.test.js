@@ -2,7 +2,7 @@
 
 const ck = require('chronokinesis');
 
-const viewHelpers = require('../../../../app/lib/helpers/handlebars');
+const viewHelpers = require('../../../../app/lib/helpers/view-helpers');
 
 describe('timeLeft', () => {
 	before(ck.freeze);

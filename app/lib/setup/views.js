@@ -1,7 +1,7 @@
 'use strict';
 
 const exphbs = require('express-handlebars');
-const helpers = require('../helpers/handlebars');
+const helpers = require('../helpers/view-helpers');
 let hbs;
 
 module.exports = setup;
