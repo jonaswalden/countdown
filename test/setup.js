@@ -1,13 +1,15 @@
 'use strict';
 
 const chai = require('chai');
-const mongoose = require('mongoose');
+const spies = require('chai-spies');
 
-// mongoose.set('debug', true);
 const setupDatabase = require('../app/lib/setup/database');
 const setupEnvironment = require('../app/lib/setup/environment');
 
+global.chai = chai;
 global.expect = chai.expect;
+
+chai.use(spies);
 
 setupEnvironment('test');
 setupDatabase();
