@@ -8,7 +8,7 @@
     "fixlint": "eslint --fix **/*.js",
     "test": "npm run lint & mocha test/**/*.js",
     "gm": "node scripts/test-image.js",
-    "start": "nodemon --ignore resources/*"
+    "start": "nodemon --ignore resources/* --watch app --ext js,hbs"
   },
   "author": "Jonas Waldén",
   "license": "ISC",
