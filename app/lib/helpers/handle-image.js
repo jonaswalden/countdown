@@ -10,10 +10,27 @@ const {getResourceDir} = require('../setup/files');
 const imageRoot = 'images';
 
 module.exports = handleImage;
+module.exports.removeImage = removeImage;
 module.exports.getImagePath = getImagePath;
 
 function handleImage (file) {
-	return new Promise((rs, rj) => processImage(file, rs, rj));
+	console.log('file', file);
+	return new Promise((...p) => processImage(file, ...p));
+}
+
+function removeImage (filePath, includingDir) {
+	const dirPath = path.substr(0, path.lastIndexOf('/'));
+	return new Promise((resolve, reject) => {
+		fs.unlink(filePath, fileErr => {
+			if (fileErr) return reject(fileErr);
+			if (!includingDir) return resolve();
+
+			fs.rmdir(dirPath, dirErr => {
+				if (dirErr) return reject(dirErr);
+				resolve();
+			});
+		});
+	});
 }
 
 function processImage (file, resolve, reject) {
@@ -27,7 +44,6 @@ function processImage (file, resolve, reject) {
 
 	return writeDir(() => {
 		writeImage(() => {
-			console.log('success!');
 			resolve(imagePath);
 		});
 	});
@@ -50,7 +66,7 @@ function processImage (file, resolve, reject) {
 	}
 
 	function rollback (imageErr) {
-		fs.rmdir(imageDirPath);
+		fs.rmdir(imageDirPath, dirErr => console.err(dirErr));
 		reject(imageErr);
 	}
 
