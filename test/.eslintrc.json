@@ -5,6 +5,7 @@
 		"mocha": true
 	},
 	"globals": {
+		"chai": false,
 		"expect": false,
 		"feature": false,
 		"scenario": false,
