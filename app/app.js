@@ -18,6 +18,8 @@ setupViews(app);
 setupRoutes(app);
 setupError(app);
 
-app.listen(port, () => console.log(`countdown on ${port}`)); // eslint-disable-line no-console
+if (process.env.NODE_ENV !== 'test') {
+	app.listen(port, () => console.log(`countdown on ${port}`)); // eslint-disable-line no-console
+}
 
 module.exports = app;
