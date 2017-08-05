@@ -46,7 +46,6 @@ function renderSingle (req, res) {
 		{slug: req.params.eventSlug},
 		(err, event) => {
 			if (err) return res.send(err);
-			console.log(event);
 			res.render('pages/event', {event});
 		}
 	);

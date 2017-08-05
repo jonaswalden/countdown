@@ -9,13 +9,12 @@ factory.define('event', Event, buildOptions => {
 	const nextYear = new Date().getFullYear() + 1;
 	const attrs = {};
 
-	attrs.body = `
-		# {{title}}
-
-		content content content
-
-		{{ticker}}
-	`;
+	attrs.body = '' +
+		'# {{title}}\n' +
+		'\n' +
+		'content content content\n' +
+		'\n' +
+		'{{ticker}}';
 	attrs.startString = `${nextYear}-04-02 10:00`;
 	attrs.title = `Event No ${eventCount}`;
 

@@ -1,0 +1,9 @@
+{{#with style}}
+	{{#with text}}
+		{{#if color}}color: {{color}};{{/if}}
+	{{/with}}
+	{{#with background}}
+		{{#if color}}background-color: {{color}};{{/if}}
+		{{#if image}}background-image: url({{image}});{{/if}}
+	{{/with}}
+{{/with}}

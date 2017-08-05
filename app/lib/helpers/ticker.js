@@ -86,8 +86,6 @@ function Template (phraseTemplate) {
 	if (typeof phraseTemplate !== 'string') return phraseTemplate;
 	const [units, unitTemplate] = parse();
 
-	console.log('template', units, unitTemplate);
-
 	return {
 		string: phraseTemplate,
 		compile,
