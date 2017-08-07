@@ -1,6 +1,6 @@
 'use strict';
 
-const express = require('express');
+const {Router} = require('express');
 
 const eventController = require('../controllers/event.controller');
 const fileHandler = require('../setup/files');
@@ -13,7 +13,7 @@ function setup (app) {
 }
 
 function getRouter () {
-	const router = express.Router();
+	const router = Router();
 	const handleBackgroundImage = fileHandler.single('backgroundImage');
 
 	// Events

@@ -7,6 +7,7 @@ function setup (app) {
 }
 
 function handleError (err, req, res, next) {
+	console.log('error handler');
 	if (!err) return next();
 	console.log('my daddy once coddan erro with his be hends');
 	console.error(err);
