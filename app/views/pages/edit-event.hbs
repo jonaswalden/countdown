@@ -6,9 +6,8 @@
 	{{/if}}
 </h1>
 
-<form action="{{postPath}}" method="POST" enctype="multipart/form-data">
+<form action="{{postPath}}{{#if editingEvent}}?_method=PUT{{/if}}" method="POST" enctype="multipart/form-data">
 	{{#if editingEvent}}
-		<input id="method-override" name="_method" type="hidden" value="PUT">
 		<input id="event-id" name="_id" type="hidden" value="{{event._id}}">
 	{{/if}}
 

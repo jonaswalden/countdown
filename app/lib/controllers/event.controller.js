@@ -71,7 +71,7 @@ function update (req, res, next) {
 		handleFormData(req, event);
 		event.save((saveErr, savedEvent) => {
 			if (saveErr) return next(saveErr);
-			res.redirect(`/events/${savedEvent.slug}/`);
+			res.redirect(`/event/${savedEvent.slug}/`);
 		});
 	});
 }
