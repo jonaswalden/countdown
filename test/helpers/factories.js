@@ -20,7 +20,6 @@ factory.define('event', Event, buildOptions => {
 
 	if (buildOptions.minimal) return attrs;
 
-	// attrs.slug = `event-${eventCount}`;
 	attrs.style = {};
 	attrs.style.background = {color: 'black'};
 	attrs.style.text = {color: 'white'};
