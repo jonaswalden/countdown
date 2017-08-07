@@ -50,9 +50,9 @@ function processImage (file, resolve, reject) {
 
 	function writeDir (done) {
 		fs.mkdir(imageDirPath, 484, (err) => {
-			console.log('making dir');
+			// console.log('making dir');
 			if (err) return reject(err);
-			console.log('making dir - success');
+			// console.log('making dir - success');
 			done();
 		});
 	}
