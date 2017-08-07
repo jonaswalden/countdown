@@ -4,7 +4,7 @@ const cheerio = require('cheerio');
 const request = require('supertest');
 
 const app = require('../../app/app');
-const factories = require('../helpers/factories');
+const factory = require('../helpers/factories');
 const Event = require('../../app/lib/models/event.model');
 
 feature('Create event', () => {
@@ -14,7 +14,7 @@ feature('Create event', () => {
 		let $, eventData, postPath;
 
 		before(async () => {
-			eventData = await factories.attrs('event');
+			eventData = await factory.attrs('event', {backgroundImage: null});
 		});
 
 		when('the user visits the create event page', done => {

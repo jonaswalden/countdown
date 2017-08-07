@@ -4,7 +4,7 @@ const cheerio = require('cheerio');
 const request = require('supertest');
 
 const app = require('../../app/app');
-const factories = require('../helpers/factories');
+const factory = require('../helpers/factories');
 const Event = require('../../app/lib/models/event.model');
 
 feature('Edit event', () => {
@@ -13,11 +13,10 @@ feature('Edit event', () => {
 	scenario('User edits an event', () => {
 		let $, event, postPath, changedBody;
 
-		given('we have an event', done => {
-			factories.attrs('event').then(_event => {
-				event = new Event(_event);
-				event.save(done);
-			});
+		given('we have an event', async () => {
+			const _event = await factory.attrs('event', {backgroundImage: null});
+			event = new Event(_event);
+			await event.save();
 		});
 
 		when('the user visits the edit event page', done => {
@@ -39,7 +38,6 @@ feature('Edit event', () => {
 
 		and('there should be a method-override field', () => {
 			const $methodOverride = $('#method-override');
-			expect($methodOverride.length).to.equal(1);
 			expect($methodOverride.attr('name')).to.equal('_method');
 			expect($methodOverride.val()).to.equal('PUT');
 			expect($methodOverride.attr('type')).to.equal('hidden');
@@ -47,9 +45,8 @@ feature('Edit event', () => {
 
 		and('there should be an id field', () => {
 			const $id = $('#event-id');
-			expect($id.length).to.equal(1);
 			expect($id.attr('name')).to.equal('_id');
-			expect($id.val()).to.equal(event._id);
+			expect($id.val()).to.equal(event._id.toString());
 			expect($id.attr('type')).to.equal('hidden');
 		});
 
@@ -60,12 +57,8 @@ feature('Edit event', () => {
 		and('posts the form', done => {
 			request(app)
 				.put(postPath)
-				.field('title', event.title)
-				.field('startString', event.startString)
+				.field('_id', event._id.toString())
 				.field('body', changedBody)
-				.field('style.text.color', event.style.text.color)
-				.field('style.background.color', event.style.background.color)
-				.field('backgroundImage', event.backgroundImage)
 				.expect(302, done);
 		});
 
