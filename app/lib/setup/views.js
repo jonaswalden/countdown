@@ -8,7 +8,8 @@ module.exports = setup;
 module.exports.getEngine = getEngine;
 
 function setup (app) {
-	app.engine('hbs', getEngine().engine);
+	const {engine} = getEngine();
+	app.engine('hbs', engine);
 	app.set('view engine', 'hbs');
 	app.set('views', 'app/views');
 }
