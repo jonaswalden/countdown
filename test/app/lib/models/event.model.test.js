@@ -1,14 +1,10 @@
 'use strict';
 
-const fs = require('fs');
 const moment = require('moment');
-const path = require('path');
-const uuid = require('uuid/v4');
 
 const Event = require('../../../../app/lib/models/event.model');
 const factory = require('../../../helpers/factories');
-const {uploadsDir} = require('../../../../app/lib/setup/files');
-const slugify = require('../../../../app/lib/helpers/slugify');
+const uploadFile = require('../../../helpers/upload-file');
 
 describe('event model', () => {
 	const requiredProps = ['body', 'startString', 'title'];
@@ -37,9 +33,7 @@ describe('event model', () => {
 		});
 
 		it('has all expected props', () => {
-			console.log(Object.keys(eventData));
-			console.log(allProps );
-			expect(Object.keys(eventData)).to.have.same.members(...requiredProps, ...optionalProps);
+			expect(Object.keys(eventData)).to.have.same.members(...allProps);
 		});
 	});
 
@@ -96,8 +90,7 @@ describe('event model', () => {
 		let event, eventData;
 
 		beforeEach(async () => {
-			eventData = await factory.attrs('event');
-			eventData.backgroundImage = mockFile(eventData.backgroundImage);
+			eventData = EventData();
 		});
 
 		it('gets value from title', () => {
@@ -134,7 +127,6 @@ describe('event model', () => {
 
 		it('gets value from start', async () => {
 			eventData = await EventData({start: () => start});
-			eventData.backgroundImage = mockFile(eventData.backgroundImage);
 			delete eventData.startSTring;
 
 			event = new Event(eventData);
@@ -143,7 +135,7 @@ describe('event model', () => {
 		});
 
 		it('sets value to start', async () => {
-			eventData = await EventData('event', {startString});
+			eventData = await EventData({startString});
 			delete eventData.start;
 
 			event = new Event(eventData);
@@ -156,32 +148,6 @@ describe('event model', () => {
 async function EventData (data = {}, minimal = false) {
 	const opts = {minimal};
 	const eventData = await factory.attrs('event', data, opts);
-	if (!minimal) {
-		eventData.backgroundImage = await mockFile(eventData.backgroundImage);
-	}
+	await uploadFile(eventData, 'backgroundImage');
 	return eventData;
-}
-
-async function mockFile (filePath) {
-	const readPath = path.join(process.cwd(), filePath);
-	const fileName = path.basename(readPath);
-	const writePath = path.join(uploadsDir, uuid());
-	await copyFile(readPath, writePath);
-	return {
-		originalname: fileName,
-		path: writePath
-	};
-}
-
-function copyFile (readPath, writePath) {
-	return new Promise((resolve, reject) => {
-		fs.readFile(readPath, (readErr, data) => {
-			if (readErr) return reject(readErr);
-
-			fs.writeFile(writePath, data, writeErr => {
-				if (writeErr) return reject(writeErr);
-				resolve();
-			});
-		});
-	});
 }

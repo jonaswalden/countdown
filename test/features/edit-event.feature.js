@@ -36,11 +36,8 @@ feature('Edit event', () => {
 			postPath = form.attr('action');
 		});
 
-		and('there should be a method-override field', () => {
-			const $methodOverride = $('#method-override');
-			expect($methodOverride.attr('name')).to.equal('_method');
-			expect($methodOverride.val()).to.equal('PUT');
-			expect($methodOverride.attr('type')).to.equal('hidden');
+		and('action value should have method-override parameter', () => {
+			expect(postPath).to.contain('_method=PUT');
 		});
 
 		and('there should be an id field', () => {
@@ -56,7 +53,7 @@ feature('Edit event', () => {
 
 		and('posts the form', done => {
 			request(app)
-				.put(postPath)
+				.post(postPath)
 				.field('_id', event._id.toString())
 				.field('body', changedBody)
 				.expect(302, done);
