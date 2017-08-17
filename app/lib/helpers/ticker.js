@@ -67,9 +67,7 @@ function Ticker (targetDate, templateString, tickCallback) {
 		}
 
 		function update () {
-			console.log('update', new Date());
 			const {time, timeString} = getTimeLeft(timeToEvenCycle || updateFrequency);
-			console.log('tickCallback', timeString);
 			tickCallback(timeString);
 			if (time <= 0) stop();
 		}

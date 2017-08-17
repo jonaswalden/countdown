@@ -46,6 +46,7 @@ function renderSingle (req, res) {
 		{slug: req.params.eventSlug},
 		(err, event) => {
 			if (err) return res.send(err);
+			event.style.tickerFormat = '{{d}} d, {{hh}}:{{mm}}:{{ss}}';
 			res.render('pages/event', {event});
 		}
 	);
