@@ -1,0 +1,9 @@
+{
+	"presets": [
+		"minify",
+		["env", {"modules": false}]
+	],
+	"plugins": [
+		"external-helpers"
+	]
+}

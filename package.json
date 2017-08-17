@@ -7,6 +7,7 @@
     "lint": "eslint **/*.js",
     "fixlint": "eslint --fix **/*.js",
     "test": "npm run lint & mocha test/**/*.js",
+    "scripts": "rollup -c rollup.config.js",
     "start": "nodemon --ignore resources/* --watch app --ext js,hbs"
   },
   "author": "Jonas Waldén",
@@ -26,6 +27,10 @@
     "uuid": "^3.0.1"
   },
   "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-minify": "^0.2.0",
     "chai": "^3.5.0",
     "chai-spies": "^0.7.1",
     "cheerio": "^0.22.0",
@@ -35,6 +40,10 @@
     "mocha": "^3.1.2",
     "mocha-cakes-2": "^2.1.0",
     "moment": "^2.18.1",
+    "rollup": "^0.47.2",
+    "rollup-plugin-babel": "^3.0.1",
+    "rollup-plugin-commonjs": "^8.1.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
     "supertest": "^3.0.0"
   }
 }
