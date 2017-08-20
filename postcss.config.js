@@ -4,7 +4,6 @@ module.exports = {
 	map: {
 		inline: false
 	},
-	parser: require('postcss-comment'),
 	plugins: [
 		require('postcss-easy-import'),
 		require('postcss-nested'),
