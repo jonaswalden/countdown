@@ -6,7 +6,6 @@ module.exports = {
 	},
 	parser: require('postcss-comment'),
 	plugins: [
-		require('postcss-normalize'),
 		require('postcss-easy-import'),
 		require('postcss-nested'),
 		require('css-mqpacker'),
