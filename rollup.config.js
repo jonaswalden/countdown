@@ -1,8 +1,10 @@
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
-import babel from 'rollup-plugin-babel';
+'use strict';
 
-export default {
+const resolve = require('rollup-plugin-node-resolve');
+const commonjs = require('rollup-plugin-commonjs');
+const babel = require('rollup-plugin-babel');
+
+module.exports = {
 	entry: 'app/assets/js/main.js',
 	dest: 'resources/bundles/scripts.js',
 	format: 'iife',
