@@ -18,7 +18,6 @@ function setup (app) {
 }
 
 function exposeDevEnvironment (req, res, next) {
-	console.log('adding local');
 	res.locals.DEVELOPMENT = true;
 	next();
 }
