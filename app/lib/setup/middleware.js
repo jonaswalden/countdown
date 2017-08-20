@@ -11,4 +11,14 @@ function setup (app) {
 	app.use('/images', express.static('resources/images'));
 	app.use(helmet());
 	app.use(methodOverride('_method'));
+
+	if (process.env.NODE_ENV === 'development') {
+		app.use(exposeDevEnvironment);
+	}
+}
+
+function exposeDevEnvironment (req, res, next) {
+	console.log('adding local');
+	res.locals.DEVELOPMENT = true;
+	next();
 }
