@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <title>SSR test</title>
-<link rel="stylesheet" href="/bundles/main.css">
+<link rel="stylesheet" href="/bundles/styles.css">
 
 {{{body}}}
 
 <script src="/bundles/scripts.js"></script>
+{{#if DEVELOPMENT}}
+	<script src="http://localhost:3001/livereload.js?snipver=1"></script>
+{{/if}}
