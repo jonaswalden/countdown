@@ -1,0 +1,13 @@
+.event {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-height: 100vh;
+	background-size: cover;
+	background-position: center;
+
+	&__body {
+		max-width: 40em;
+		margin: 0 auto;
+	}
+}

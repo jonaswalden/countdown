@@ -1,0 +1,9 @@
+.form {
+	&__input-group {
+		margin: 1em 0;
+	}
+
+	&__input-group label {
+		display: block;
+	}
+}
