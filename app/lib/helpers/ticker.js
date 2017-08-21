@@ -46,19 +46,15 @@ function Ticker (targetDate, templateString, tickCallback) {
 	};
 
 	function start (waited) {
-		console.log('----starting', waited);
 		const currentDate = new Date();
 		const now = currentDate.getTime();
 		const timeToEvenCycle = waited ? 0 : now % updateFrequency;
 
 		if (timeToEvenCycle) {
-			console.log('awaiting even cycle', timeToEvenCycle);
-			console.log('now         ', currentDate);
-			console.log('updateMoment', new Date(now + timeToEvenCycle));
 			awaitingEvenCycle = true;
 			timer = setTimeout(awaitEvenCycle, timeToEvenCycle);
 			return;
-		} else console.log('no wait. time is flush');
+		}
 
 		timer = setInterval(update, updateFrequency);
 
@@ -76,7 +72,6 @@ function Ticker (targetDate, templateString, tickCallback) {
 	}
 
 	function stop () {
-		console.log('----stop', awaitingEvenCycle ? 'clearing timeout' : 'clearing interval');
 		if (awaitingEvenCycle) return clearTimeout(timer);
 		clearInterval(timer);
 	}
