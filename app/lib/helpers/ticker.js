@@ -120,7 +120,7 @@ function Template (phraseTemplate) {
 
 	function getUpdateFrequency () {
 		let smallestUnit = unitTemplate.substr(-1);
-		if (smallestUnit === 'S') return 1;
+		if (smallestUnit === 'S') return 1000 / 60;
 		return moment.duration(1, smallestUnit).asMilliseconds();
 	}
 }
