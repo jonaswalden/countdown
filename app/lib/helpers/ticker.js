@@ -23,9 +23,11 @@ function TimeLeft (targetDate, templateString) {
 	}
 
 	function calculate (diff) {
-		if (!diff) return target - Date.now();
-		if (!lastTimeLeft) return lastTimeLeft = Date.now();
-		return lastTimeLeft -= diff;
+		if (lastTimeLeft && diff) return lastTimeLeft -= diff;
+
+		const timeLeft = target - Date.now();
+		if (!diff) return timeLeft;
+		return lastTimeLeft = timeLeft;
 	}
 }
 
