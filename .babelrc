@@ -1,6 +1,6 @@
 {
 	"presets": [
-		"minify",
+		//"minify",
 		["env", {"modules": false}]
 	],
 	"plugins": [
