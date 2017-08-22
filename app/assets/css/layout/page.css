@@ -1,0 +1,7 @@
+.page {
+	&--form {
+		padding: 1em;
+		margin: * auto;
+		max-width: 24em;
+	}
+}

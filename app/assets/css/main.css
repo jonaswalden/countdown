@@ -1,3 +1,5 @@
 @import "normalize-css";
+
 @import './base/*';
+@import './layout/*';
 @import './module/*';

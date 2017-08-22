@@ -1,0 +1,16 @@
+@custom-selector :--button button, .button;
+@custom-selector :--focus :hover, :focus, :active;
+
+:--button {
+	border: 2px solid currentColor;
+	background: transparent;
+	padding: 0.5em 1em;
+	min-width: 5em;
+	font-weight: bold;
+	line-height: inherit;
+	transition: color 0.2s ease;
+
+	&:--focus {
+		color: green;
+	}
+}

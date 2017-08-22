@@ -1,9 +1,90 @@
+@custom-selector :--form form, .form;
+@custom-selector :--text-field input[type="text"], textarea;
+
+fieldset {
+	border: none;
+	padding: 0 0 0 0.5em;
+}
+
+legend {
+	display: block;
+	margin: 0 0 0 -0.5em;
+}
+
+legend,
+label,
+:--text-field {
+	padding: 0.1em;
+	line-height: inherit;
+	border: solid currentColor;
+	border-width: 0 0 1px;
+}
+
+legend,
+label {
+	padding-left: 0;
+	border-color: transparent;
+}
+
+:--text-field {
+	color: inherit;
+}
+
+textarea {
+	border-width: 1px;
+	padding: 0.5em;
+}
+
+::placeholder {
+	color: inherit;
+}
+
 .form {
+	&__cluster,
 	&__input-group {
 		margin: 1em 0;
 	}
 
-	&__input-group label {
-		display: block;
+	&__cluster &__input-group {
+		margin: 0.5em * 0;
+	}
+
+	&__input-group {
+		display: flex;
+		min-width: 20em;
+
+		label {
+			margin-right: 0.5em;
+			display: block;
+			white-space: nowrap;
+		}
+
+		:--text-field {
+			width: 3em;
+			flex-grow: 1;
+		}
+
+		textarea {
+			width: auto;
+		}
+
+		:--text-field + :--text-field {
+			margin-left: 1em;
+		}
+
+		&--multi-line {
+			flex-direction: column;
+		}
+
+		&--multi-line label {
+			margin-bottom: 0.5em;
+		}
+	}
+
+	&__actions {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		margin: 2em * *;
 	}
 }

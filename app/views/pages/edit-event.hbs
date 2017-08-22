@@ -1,44 +1,59 @@
-<h1>
-	{{#if editingEvent}}
-		Editing {{event.title}}
-	{{else}}
-		New event
-	{{/if}}
-</h1>
+<main class="page page--form">
+	<h1>
+		{{#if editingEvent}} Editing {{else}} New event {{/if}}
+	</h1>
 
-<form action="{{postPath}}{{#if editingEvent}}?_method=PUT{{/if}}" method="POST" enctype="multipart/form-data">
-	{{#if editingEvent}}
-		<input id="event-id" name="_id" type="hidden" value="{{event._id}}">
-	{{/if}}
+	<form action="{{postPath}}{{#if editingEvent}}?_method=PUT{{/if}}" method="POST" enctype="multipart/form-data">
+		{{#if editingEvent}}
+			<input id="event-id" name="_id" type="hidden" value="{{event._id}}">
+		{{/if}}
 
-	<div class="form__input-group">
-		<label for="input-title">What?</label>
-		<input id="input-title" name="title" type="text" value="{{event.title}}">
-	</div>
+		<div class="form__input-group">
+			<label for="input-title">Event</label>
+			<input id="input-title" name="title" type="text" value="{{event.title}}">
+		</div>
 
-	<div class="form__input-group">
-		<label for="input-title">When?</label>
-		<input id="input-time" name="startString" type="text" value="{{event.startString}}" placeholder="Eg: 2011-04-02 11:00">
-	</div>
+		<div class="form__input-group">
+			<label for="input-title">Date/time</label>
+			<input id="input-time" name="startString" type="text" value="{{event.startString}}" placeholder="Eg: 2011-04-02 11:00">
+		</div>
 
-	<div class="form__input-group">
-		<label for="input-body">Show me!</label>
-		<textarea id="input-body" name="body">{{event.body}}</textarea>
-	</div>
+		<div class="form__input-group form__input-group--multi-line">
+			<label for="input-body">Describe</label>
+			<textarea id="input-body" name="body" rows="10">{{event.body}}</textarea>
+		</div>
 
-	<div class="form__input-group">
-		<label for="input-text-color">Text</label>
-		<input id="input-text-color" name="style.text.color" type="color" value="{{event.style.text.color}}">
-		<label for="input-text-color" style="display: inline;">Color</label>
-	</div>
+		<fieldset class="form__cluster">
+			<legend>Text</legend>
 
-	<div class="form__input-group">
-		<label for="input-background-image">Background</label>
-		<input id="input-background-color" name="style.background.color" type="color" value="{{event.style.background.color}}">
-		<input id="input-background-image" name="backgroundImage" type="file">
-	</div>
+			<div class="form__input-group">
+				<label for="input-text-color">Color</label>
+				<input id="input-text-color" name="style.text.color" type="color" value="{{event.style.text.color}}">
+			</div>
 
-	<div class="form__actions">
-		<button>Go!</button>
-	</div>
-</form>
+			<div class="form__input-group">
+				<label for="input-text-font">Font</label>
+				<input id="input-text-font-heading" name="style.text.fontHeading" type="text" value="{{event.style.text.fontHeading}}" placeholder="Headings">
+				<input id="input-text-font-body" name="style.text.fontBody" type="text" value="{{event.style.text.fontBody}}" placeholder="Body">
+			</div>
+		</fieldset>
+
+		<fieldset class="form__cluster">
+			<legend>Background</legend>
+
+			<div class="form__input-group">
+				<label for="input-background-image">Color</label>
+				<input id="input-background-color" name="style.background.color" type="color" value="{{event.style.background.color}}">
+			</div>
+
+			<div class="form__input-group">
+				<label for="input-background-image">Image</label>
+				<input id="input-background-image" name="backgroundImage" type="file">
+			</div>
+		</fieldset>
+
+		<div class="form__actions">
+			<button>Done ✓</button>
+		</div>
+	</form>
+</main>
