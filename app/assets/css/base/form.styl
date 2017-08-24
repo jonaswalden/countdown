@@ -1,6 +1,3 @@
-@custom-selector :--form form, .form;
-@custom-selector :--text-field input[type="text"], textarea;
-
 fieldset {
 	border: none;
 	padding: 0 0 0 0.5em;
@@ -13,7 +10,8 @@ legend {
 
 legend,
 label,
-:--text-field {
+input[type="text"],
+textarea {
 	padding: 0.1em;
 	line-height: inherit;
 	border: solid currentColor;
@@ -26,8 +24,16 @@ label {
 	border-color: transparent;
 }
 
-:--text-field {
+input[type="text"],
+textarea {
 	color: inherit;
+	transition: color 0.2s ease;
+
+	&:focus,
+	&:active {
+		outline: none;
+		color: $c-highlight;
+	}
 }
 
 textarea {
@@ -59,17 +65,18 @@ textarea {
 			white-space: nowrap;
 		}
 
-		:--text-field {
+		input[type="text"],
+		textarea {
 			width: 3em;
 			flex-grow: 1;
+
+			& + & {
+				margin-left: 1em;
+			}
 		}
 
 		textarea {
 			width: auto;
-		}
-
-		:--text-field + :--text-field {
-			margin-left: 1em;
 		}
 
 		&--multi-line {
