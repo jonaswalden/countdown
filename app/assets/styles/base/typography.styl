@@ -1,7 +1,9 @@
+$t-line-height = 1.4;
+
 body {
 	font-family: 'courier new', monospace;
 	color: $c-text;
-	line-height: 1.4;
+	line-height: $t-line-height;
 }
 
 h1 {
@@ -16,4 +18,10 @@ h1 {
 a,
 a:visited {
 	color: inherit;
+}
+
+a:focus,
+a:active {
+	color: $c-highlight;
+	outline: none;
 }
