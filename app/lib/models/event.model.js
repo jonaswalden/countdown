@@ -4,7 +4,6 @@ const _ = require('lodash');
 const moment = require('moment');
 const mongoose = require('mongoose');
 
-const handleImage = require('../helpers/handle-image');
 const {parse: parseBody} = require('../helpers/parse-body');
 const slugify = require('../helpers/slugify');
 
@@ -60,10 +59,6 @@ eventSchema
 	.virtual('bodyMarkup')
 	.get(getBodyMarkup);
 
-eventSchema
-	.virtual('backgroundImage')
-	.set(setBackgroundImageFromFile);
-
 eventSchema.set('toObject', { getters: true, setters: true, virtuals: true });
 eventSchema.set('toJSON', { getters: true, setters: true, virtuals: true });
 
@@ -86,13 +81,4 @@ function getBodyMarkup () {
 function setSlugFromTitle (title) {
 	this.slug = slugify(title);
 	return title;
-}
-
-async function setBackgroundImageFromFile (imageFile) {
-	try {
-		_.set(this, 'style.background.image', await handleImage(imageFile));
-	}
-	catch (err) {
-		console.error('Error setting event background image', err);
-	}
 }

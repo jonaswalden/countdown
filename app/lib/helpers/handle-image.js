@@ -44,7 +44,7 @@ function processImage (file, resolve, reject) {
 
 	return writeDir(() => {
 		writeImage(() => {
-			resolve(imagePath);
+			resolve('/' + imagePath);
 		});
 	});
 

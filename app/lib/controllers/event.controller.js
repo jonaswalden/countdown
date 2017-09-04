@@ -3,6 +3,7 @@
 const _ = require('lodash');
 
 const Event = require('../models/event.model');
+const handleImage = require('../helpers/handle-image');
 
 module.exports = {
 	clear,
@@ -52,29 +53,45 @@ function renderSingle (req, res) {
 	);
 }
 
-function create (req, res, next) {
-	const eventData = handleFormData(req);
-	const event = new Event(eventData);
-	event.save(err => {
+async function create (req, res, next) {
+	try {
+		const eventData = await handleFormData(req);
+		const event = new Event(eventData);
+		event.save(saved);
+	}
+	catch (err) {
+		next(err);
+	}
+
+	function saved (err) {
 		if (err && err.name) return res.redirect('/events/create/');
 		if (err) return next(err);
 		res.redirect(`/event/edit/${event.slug}/`);
-	});
+	}
 }
 
 function update (req, res, next) {
 	const {_id} = req.body;
 	if (!_id) return next(new Error('missing event id'));
 
-	Event.findById(_id, (err, event) => {
-		if (err) return next(err);
+	Event.findById(_id, found);
 
-		handleFormData(req, event);
-		event.save((saveErr, savedEvent) => {
-			if (saveErr) return next(saveErr);
-			res.redirect(`/event/${savedEvent.slug}/`);
-		});
-	});
+	async function found (err, event) {
+	 if (err) return next(err);
+
+	 try {
+		 await handleFormData(req, event);
+		 event.save(saved);
+	 }
+	 catch (err) {
+		 next(err);
+	 }
+ }
+
+ function saved (err, savedEvent) {
+	 if (err) return next(err);
+	 res.redirect(`/event/${savedEvent.slug}/`);
+ }
 }
 
 function seed (req, res) {
@@ -110,13 +127,13 @@ function clear (req, res) {
 	});
 }
 
-function handleFormData (req, dest = {}) {
+async function handleFormData (req, dest = {}) {
 	const eventData = Object.assign({}, req.body);
 
 	if (req.file) {
 		console.log('file present', req.file);
-		eventData[req.file.fieldname] = req.file;
-	} else console.log('no file bietch');
+		eventData[req.file.fieldname] = await handleImage(req.file);
+	} else console.log('no file, yo');
 
 	return Object.keys(eventData).reduce((formData, keyPath) => {
 		return _.set(formData, keyPath, eventData[keyPath]);

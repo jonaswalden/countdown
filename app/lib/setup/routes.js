@@ -14,7 +14,7 @@ function setup (app) {
 
 function getRouter () {
 	const router = Router();
-	const handleBackgroundImage = fileHandler.single('backgroundImage');
+	const handleBackgroundImage = fileHandler.single('style.background.image');
 
 	// Events
 	router.get('/events/', eventController.renderAll);
@@ -32,27 +32,6 @@ function getRouter () {
 	router.get('/events/seed/', eventController.seed);
 
 	router.get('/events/clear/', eventController.clear);
-
-	router.get('/try-image-upload/', (req, res) => {
-		res.send(`
-			<form method="POST" action="/try-image-upload/" enctype="multipart/form-data">
-				<label>Image</label>
-				<input type="file" name="style.background.image" />
-				<button>Do it</button>
-			</form>
-		`);
-	});
-	router.post('/try-image-upload/', handleBackgroundImage, async (req, res, next) => {
-		try {
-			const imageId = await handleImage(req.file);
-			res.send(`
-				<h1>success: ${imageId}</h1>
-				<a href="/try-image-upload">again</a>
-			`);
-		} catch (err) {
-			next(err);
-		}
-	});
 
 	// Default
 	router.get('/', (req, res) => {
