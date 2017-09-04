@@ -5,7 +5,7 @@ const commonjs = require('rollup-plugin-commonjs');
 const babel = require('rollup-plugin-babel');
 
 module.exports = {
-	entry: 'app/assets/js/main.js',
+	entry: 'app/assets/scripts/main.js',
 	dest: 'resources/bundles/scripts.js',
 	format: 'iife',
 	sourceMap: true,
