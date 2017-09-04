@@ -1,7 +1,11 @@
 {{#with event}}
-	<div class="event" style="{{> event-style style=style}}">
+	<div class="event">
 		<div class="event__body">
 			{{{compileEventBody bodyMarkup this}}}
+			<hr>
+			<pre>{{this}}</pre>
 		</div>
 	</div>
+
+	{{> event-style style=style}}
 {{/with}}

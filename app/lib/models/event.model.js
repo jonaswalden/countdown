@@ -14,7 +14,9 @@ const backgroundStyleSchema = new mongoose.Schema({
 });
 
 const textStyleSchema = new mongoose.Schema({
-	color: String
+	color: String,
+	fontHeading: String,
+	fontBody: String
 });
 
 const eventStyleSchema = new mongoose.Schema({

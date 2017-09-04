@@ -1,24 +1,19 @@
 <main class="page page--list">
-	<h1>Listing events</h1>
+	<header>
+		<h1>Events</h1>
+		<a class="button" href="/events/create/">New +</a>
+	</header>
 
-	<ul>
+	<ul class="list">
 		{{#each events}}
-			<li>
-				<p>
-					<a href="/event/{{this.slug}}/">{{this.title}}</a>
-					<br>
+			<li class="event-item">
+				<div class="event-item__details">
+					<a class="event-item__link" href="/event/{{this.slug}}/">{{this.title}}</a>
 					<time>{{dateTime this.start}}</time>
-				</p>
-				<p>
-					<a href="/event/edit/{{this.slug}}/" class="button button--slim">Edit</a>
-				</p>
+				</div>
+
+				<a class="button button--slim" href="/event/edit/{{this.slug}}/">Edit</a>
 			</li>
 		{{/each}}
 	</ul>
-
-	<div class="form__actions">
-		<a href="/events/create/" class="button">
-			New event +
-		</a>
-	</div>
 </main>

@@ -7,11 +7,16 @@ const {TimeLeft} = require('./ticker');
 const tickerPartial = require('../../views/partials/ticker');
 
 module.exports = {
-	timeLeft,
+	compileEventBody: CompileEventBody(),
 	dateTime,
+	defaultValue,
 	jsonDate,
-	compileEventBody: CompileEventBody()
+	timeLeft
 };
+
+function defaultValue (...values) {
+	return values.find(v => typeof v !== 'undefined');
+}
 
 function timeLeft (date, format) {
 	if (!date || !format) return console.error('timeLeft', date, format);
