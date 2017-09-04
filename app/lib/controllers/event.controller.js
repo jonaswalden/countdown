@@ -58,7 +58,7 @@ function create (req, res, next) {
 	event.save(err => {
 		if (err && err.name) return res.redirect('/events/create/');
 		if (err) return next(err);
-		res.redirect('/events/');
+		res.redirect(`/event/edit/${event.slug}/`);
 	});
 }
 
