@@ -68,7 +68,7 @@ function processImage (file, resolve, reject) {
 	}
 
 	function rollback (imageErr) {
-		fs.rmdir(imageDirPath, dirErr => console.err(dirErr));
+		fs.rmdir(imageDirPath, dirErr => console.error(dirErr));
 		reject(imageErr);
 	}
 
