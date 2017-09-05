@@ -24,19 +24,22 @@ function renderAll (req, res) {
 }
 
 function renderCreate (req, res) {
-	res.render('pages/edit-event', {postPath: req.path});
+	res.render('pages/edit-event', {
+		postPath: req.path,
+		title: 'New event'
+	});
 }
 
 function renderUpdate (req, res) {
-	Event.find(
+	Event.findOne(
 		{slug: req.params.eventSlug},
-		(err, docs) => {
+		(err, event) => {
 			if (err) return res.send(err);
 
 			res.render('pages/edit-event', {
-				postPath: req.path,
-				editingEvent: true,
-				event: docs[0]
+				postPath: req.path + '?_method=PUT',
+				title: 'Editing event'
+				event
 			});
 		}
 	);

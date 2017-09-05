@@ -1,15 +1,13 @@
 <main class="page page--form">
-	<h1>
-		{{#if editingEvent}} Editing {{else}} New event {{/if}}
-	</h1>
+	<h1>{{title}}</h1>
 
-	<form action="{{postPath}}{{#if editingEvent}}?_method=PUT{{/if}}" method="POST" enctype="multipart/form-data">
-		{{#if editingEvent}}
+	<form action="{{postPath}}" method="POST" enctype="multipart/form-data">
+		{{#if event}}
 			<input id="event-id" name="_id" type="hidden" value="{{event._id}}">
 		{{/if}}
 
 		<div class="form__input-group">
-			<label for="input-title">Event</label>
+			<label for="input-title">Title</label>
 			<input id="input-title" name="title" type="text" value="{{event.title}}">
 		</div>
 
