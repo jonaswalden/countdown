@@ -24,7 +24,7 @@ function renderAll (req, res) {
 }
 
 function renderCreate (req, res) {
-	res.render('pages/edit-event', {
+	res.render('pages/event-form', {
 		postPath: req.path,
 		title: 'New event'
 	});
@@ -36,7 +36,7 @@ function renderUpdate (req, res) {
 		(err, event) => {
 			if (err) return res.send(err);
 
-			res.render('pages/edit-event', {
+			res.render('pages/event-form', {
 				postPath: req.path + '?_method=PUT',
 				title: 'Editing event'
 				event
@@ -97,6 +97,20 @@ function update (req, res, next) {
  }
 }
 
+async function handleFormData (req, dest = {}) {
+	const eventData = Object.assign({}, req.body);
+
+	if (req.file) {
+		console.log('file present', req.file);
+		eventData[req.file.fieldname] = await handleImage(req.file);
+	} else console.log('no file, yo');
+
+	return Object.keys(eventData).reduce((formData, keyPath) => {
+		return _.set(formData, keyPath, eventData[keyPath]);
+	}, dest);
+}
+
+
 function seed (req, res) {
 	const insertions = [];
 	const errors = [];
@@ -128,17 +142,4 @@ function clear (req, res) {
 		if (err) return res.send(err);
 		res.redirect('/events/');
 	});
-}
-
-async function handleFormData (req, dest = {}) {
-	const eventData = Object.assign({}, req.body);
-
-	if (req.file) {
-		console.log('file present', req.file);
-		eventData[req.file.fieldname] = await handleImage(req.file);
-	} else console.log('no file, yo');
-
-	return Object.keys(eventData).reduce((formData, keyPath) => {
-		return _.set(formData, keyPath, eventData[keyPath]);
-	}, dest);
 }
