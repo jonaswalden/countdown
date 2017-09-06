@@ -38,7 +38,7 @@ function renderUpdate (req, res) {
 
 			res.render('pages/event-form', {
 				postPath: req.path + '?_method=PUT',
-				title: 'Editing event'
+				title: 'Editing event',
 				event
 			});
 		}
@@ -50,6 +50,7 @@ function renderSingle (req, res) {
 		{slug: req.params.eventSlug},
 		(err, event) => {
 			if (err) return res.send(err);
+			if (!event) return res.sendStatus(404);
 			event.style.tickerFormat = '{{d}} d, {{hh}}:{{mm}}:{{ss}}';
 			res.render('pages/event', {event});
 		}
@@ -66,7 +67,7 @@ async function create (req, res, next) {
 		next(err);
 	}
 
-	function saved (err) {
+	function saved (err, event) {
 		if (err && err.name) return res.redirect('/events/create/');
 		if (err) return next(err);
 		res.redirect(`/event/edit/${event.slug}/`);
