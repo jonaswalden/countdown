@@ -3,9 +3,9 @@
 const _ = require('lodash');
 const moment = require('moment');
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const {parse: parseBody} = require('../helpers/parse-body');
-const slugify = require('../helpers/slugify');
 
 const backgroundStyleSchema = new mongoose.Schema({
 	color: String,
@@ -58,9 +58,6 @@ eventSchema
 eventSchema
 	.virtual('bodyMarkup')
 	.get(getBodyMarkup);
-
-eventSchema.set('toObject', { getters: true, setters: true, virtuals: true });
-eventSchema.set('toJSON', { getters: true, setters: true, virtuals: true });
 
 const Event = mongoose.model('Event', eventSchema);
 

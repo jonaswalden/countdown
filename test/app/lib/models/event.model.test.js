@@ -1,6 +1,7 @@
 'use strict';
 
 const moment = require('moment');
+const slugify = require('slugify');
 
 const Event = require('../../../../app/lib/models/event.model');
 const factory = require('../../../helpers/factories');
