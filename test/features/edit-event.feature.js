@@ -41,7 +41,7 @@ feature('Edit event', () => {
 		});
 
 		and('there should be an id field', () => {
-			const $id = $('#event-id');
+			const $id = $('#fi-id');
 			expect($id.attr('name')).to.equal('_id');
 			expect($id.val()).to.equal(event._id.toString());
 			expect($id.attr('type')).to.equal('hidden');

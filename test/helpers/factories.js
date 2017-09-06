@@ -24,8 +24,8 @@ factory.define('event', Event, buildOptions => {
 
 	attrs.style.text = {};
 	attrs.style.text.color = 'white';
-	attrs.style.text.fontBody = 'sans-serif 18px';
-	attrs.style.text.fontHeading = 'serif 24px';
+	attrs.style.text.fontBody = '20px sans-serif';
+	attrs.style.text.fontHeading = '36px serif';
 
 	attrs.style.tickerFormat = '{{hh}}:{{mm}}';
 

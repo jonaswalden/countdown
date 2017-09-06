@@ -33,14 +33,20 @@ feature('View event', () => {
 			expect($event).to.have.length(1);
 		});
 
-		and('ït should contain some event details', () => {
+		and('it should contain some event details', () => {
 			expect($('h1').text()).to.equal(event.title);
 		});
 
-		and('ït should have some styling', () => {
-			const style = $event.attr('style');
-			expect(style).to.include(`color: ${event.style.text.color};`);
-			expect(style).to.include(`background-color: ${event.style.background.color};`);
+		and('it should have some styling', () => {
+			const stylesheet = $('style');
+			const styles = stylesheet.html();
+
+			expect(styles).to.include(`color: ${event.style.text.color};`);
+			expect(styles).to.include(`font: ${event.style.text.fontBody};`);
+			expect(styles).to.include(`font: ${event.style.text.fontHeading};`);
+
+			expect(styles).to.include(`background-color: ${event.style.background.color};`);
+			expect(styles).to.include(`background-image: url(${event.style.background.image});`);
 		});
 	});
 });

@@ -76,6 +76,6 @@ function getBodyMarkup () {
 }
 
 function setSlugFromTitle (title) {
-	this.slug = slugify(title);
+	this.slug = slugify(title).toLowerCase();
 	return title;
 }

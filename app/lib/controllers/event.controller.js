@@ -102,9 +102,8 @@ async function handleFormData (req, dest = {}) {
 	const eventData = Object.assign({}, req.body);
 
 	if (req.file) {
-		console.log('file present', req.file);
 		eventData[req.file.fieldname] = await handleImage(req.file);
-	} else console.log('no file, yo');
+	}
 
 	return Object.keys(eventData).reduce((formData, keyPath) => {
 		return _.set(formData, keyPath, eventData[keyPath]);
