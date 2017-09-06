@@ -14,7 +14,7 @@ input[type="text"],
 textarea {
 	padding: 0.1em;
 	line-height: inherit;
-	border: solid currentColor;
+	border: solid rgba($c-text, 0.5);
 	border-width: 0 0 1px;
 }
 
@@ -27,12 +27,14 @@ label {
 input[type="text"],
 textarea {
 	color: inherit;
-	transition: color 0.2s ease;
+	transition: 0.2s ease;
+	transition-property: color, border-color;
 
 	&:focus,
 	&:active {
 		outline: none;
 		color: $c-highlight;
+		border-color: $c-highlight;
 	}
 }
 
@@ -49,10 +51,6 @@ textarea {
 	&__cluster,
 	&__input-group {
 		margin: 1em 0;
-	}
-
-	&__cluster &__input-group {
-		margin: 0.5em 0 0;
 	}
 
 	&__input-group {
