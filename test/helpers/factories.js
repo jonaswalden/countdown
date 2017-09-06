@@ -21,10 +21,17 @@ factory.define('event', Event, buildOptions => {
 	if (buildOptions.minimal) return attrs;
 
 	attrs.style = {};
-	attrs.style.background = {color: 'black'};
-	attrs.style.text = {color: 'white'};
+
+	attrs.style.text = {};
+	attrs.style.text.color = 'white';
+	attrs.style.text.fontBody = 'sans-serif 18px';
+	attrs.style.text.fontHeading = 'serif 24px';
+
 	attrs.style.tickerFormat = '{{hh}}:{{mm}}';
-	attrs.backgroundImage = './test/data/test-image.jpg';
+
+	attrs.style.background = {};
+	attrs.style.background.color = 'black';
+	attrs.style.background.image = './test/data/test-image.jpg';
 
 	return attrs;
 });
