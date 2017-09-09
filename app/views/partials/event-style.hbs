@@ -1,25 +1,27 @@
 <!--
 	TODO: Huge security hole using user input as raw output
 -->
-{{#with style}}
-	<style>
-		{{#with background}}
-			.event {
-				{{#if color}}background-color: {{color}};{{/if}}
-				{{#if image}}background-image: url({{image}});{{/if}}
-			}
-		{{/with}}
-		{{#with text}}
-			.event__body {
-				{{#if color}}color: {{color}};{{/if}}
-				{{#if fontBody}}font: {{fontBody}};{{/if}}
-			}
+{{#if text.fontQuery}}
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?{{{text.fontQuery}}}">
+{{/if}}
 
-			{{#if fontHeading}}
-				.event__body h1 {
-					font: {{fontHeading}};
-				}
-			{{/if}}
-		{{/with}}
-	</style>
-{{/with}}
+<style>
+	{{#with background}}
+		.event {
+			{{#if color}}background-color: {{color}};{{/if}}
+			{{#if image}}background-image: url({{image}});{{/if}}
+		}
+	{{/with}}
+	{{#with text}}
+		.event__body > * {
+			{{#if color}}color: {{color}};{{/if}}
+			{{#if fontBody}}font: {{{fontBody}}};{{/if}}
+		}
+
+		{{#if fontHeading}}
+			.event__body h1 {
+				font: {{{fontHeading}}};
+			}
+		{{/if}}
+	{{/with}}
+</style>

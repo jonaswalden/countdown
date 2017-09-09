@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <title>SSR test</title>
 <link rel="stylesheet" href="/bundles/styles.css">
+{{#with event.style}}
+	{{> event-style}}
+{{/with}}
 
 {{{body}}}
 

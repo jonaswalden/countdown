@@ -4,6 +4,7 @@ const _ = require('lodash');
 const moment = require('moment');
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const fontQuery = require('../helpers/font-query');
 
 const {parse: parseBody} = require('../helpers/parse-body');
 
@@ -17,6 +18,10 @@ const textStyleSchema = new mongoose.Schema({
 	fontHeading: String,
 	fontBody: String
 });
+
+textStyleSchema
+	.virtual('fontQuery')
+	.get(getFontQueryFromFonts);
 
 const eventStyleSchema = new mongoose.Schema({
 	background: backgroundStyleSchema,
@@ -40,7 +45,6 @@ const eventSchema = new mongoose.Schema({
 	start: {
 		type: Date,
 		required: true
-		// min: Date.now()
 	},
 	style: eventStyleSchema,
 	title: {
@@ -51,17 +55,19 @@ const eventSchema = new mongoose.Schema({
 });
 
 eventSchema
+	.virtual('bodyMarkup')
+	.get(getBodyMarkup);
+
+eventSchema
 	.virtual('startString')
 	.get(getStartStringFromStart)
 	.set(setStartFromStartString);
 
-eventSchema
-	.virtual('bodyMarkup')
-	.get(getBodyMarkup);
+module.exports = mongoose.model('Event', eventSchema);
 
-const Event = mongoose.model('Event', eventSchema);
-
-module.exports = Event;
+function getFontQueryFromFonts () {
+	return fontQuery(this.fontBody, this.fontHeading);
+}
 
 function getStartStringFromStart () {
 	return moment(this.start).format('YYYY-MM-DD HH:mm');
