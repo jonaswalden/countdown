@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const familyPattern = /["'](.+?)["']/;
 const weightPattern = /[1-9]00|light(?:er)?|normal|bold(?:er)?/;
@@ -65,7 +65,7 @@ function rulesToQuery (...rules) {
 		const styleMatch = stylePattern.exec(rule);
 
 		const [, family] = familyMatch;
-		let weightAndStyle = "";
+		let weightAndStyle = '';
 		if (weightMatch) weightAndStyle += weightMatch[0];
 		if (styleMatch) weightAndStyle += styleMatch[0];
 
