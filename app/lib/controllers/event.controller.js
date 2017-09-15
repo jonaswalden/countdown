@@ -51,7 +51,7 @@ function renderSingle (req, res) {
 		(err, event) => {
 			if (err) return res.send(err);
 			if (!event) return res.sendStatus(404);
-			event.style.tickerFormat = '{{d}} d, {{hh}}:{{mm}}:{{ss}}';
+
 			res.render('pages/event', {event});
 		}
 	);
@@ -81,21 +81,21 @@ function update (req, res, next) {
 	Event.findById(_id, found);
 
 	async function found (err, event) {
-	 if (err) return next(err);
+		if (err) return next(err);
 
-	 try {
-		 await handleFormData(req, event);
-		 event.save(saved);
-	 }
-	 catch (err) {
-		 next(err);
-	 }
- }
+		try {
+			await handleFormData(req, event);
+			event.save(saved);
+		}
+		catch (err) {
+			next(err);
+		}
+	}
 
- function saved (err, savedEvent) {
-	 if (err) return next(err);
-	 res.redirect(`/event/${savedEvent.slug}/`);
- }
+	function saved (err, savedEvent) {
+		if (err) return next(err);
+		res.redirect(`/event/${savedEvent.slug}/`);
+	}
 }
 
 async function handleFormData (req, dest = {}) {
