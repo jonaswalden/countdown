@@ -9,6 +9,19 @@
 	&__body {
 		max-width: 40em;
 		margin: 0 auto;
+		text-align: center;
+	}
+
+	ul, ol {
+		list-style-type: none;
+		display: inline-flex;
+		text-align: left;
+		flex-direction: column;
+
+	}
+
+	ul > li::before {
+		content: '* ';
 	}
 
 	::selection {
