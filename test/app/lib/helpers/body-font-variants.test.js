@@ -34,7 +34,6 @@ function bodyFontVariants (text, context) {
 		if (!symbolMatch) return tree;
 
 		const [, symbol, index] = symbolMatch;
-		console.log('>', symbol);
 		const closing = symbol === open;
 		const substring = string.substr(index + symbol.length);
 
