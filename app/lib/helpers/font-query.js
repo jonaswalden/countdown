@@ -10,6 +10,7 @@ module.exports = rulesToQuery;
 
 function rulesToQuery (text, bodyRule, headingsRule) {
 	const texts = splitText(text);
+	console.log(texts);
 	const families = [bodyRule, headingsRule]
 		.map(parseRule)
 		.map(attachText)
@@ -38,10 +39,9 @@ function rulesToQuery (text, bodyRule, headingsRule) {
 	}
 
 	function attachText (rule, index) {
-		if (!rule) return;
-		return Object.assign({}, rule, {
-			text: texts[index]
-		});
+		const text = texts[index];
+		if (!rule || !text) return;
+		return Object.assign({}, rule, {text});
 	}
 
 	function attachInlineStyles (rule) {
@@ -101,12 +101,13 @@ function splitText (text) {
 }
 
 function bodyFontVariants (text, weight, style) {
-	const context = [weight, style];
+	const topContext = [weight, style];
 	const {children: nodes} = parse(text);
-	if (!nodes) return [context].reduce(toVariants, []);
+	if (!nodes) return [topContext].reduce(toVariants, []);
+	console.log('body font variants', topContext);
 
 	return nodes
-		.reduce(flatten, [[], context])[0]
+		.reduce(flatten, [[]])[0]
 		.reduce(toVariants, []);
 
 	function parse(string, tree = {}, open = null) {
@@ -130,7 +131,9 @@ function bodyFontVariants (text, weight, style) {
 		return parse(substring, subtree, symbol);
 	}
 
-	function flatten ([collection, [contextWeight, contextStyle]], node) {
+	function flatten ([collection, context], node) {
+		const [contextWeight, contextStyle] = context || topContext;
+		console.log('flattening', contextWeight);
 		const isStrong = node.symbol.length === 2;
 		const variant = [
 			isStrong ? resolveWeight('bolder', contextWeight) : contextWeight,
@@ -144,7 +147,7 @@ function bodyFontVariants (text, weight, style) {
 			collection.push(...childCollection);
 		}
 
-		return [collection, []];
+		return [collection];
 	}
 
 	function toVariants (collection, attrs) {
@@ -155,6 +158,7 @@ function bodyFontVariants (text, weight, style) {
 }
 
 function resolveWeight (value = 'normal', context = 400) {
+	console.log('resolving weight', value, context);
 	switch (value) {
 		case 'lighter': return resolveLighter();
 		case 'normal': return 400;
