@@ -13,6 +13,7 @@ function rulesToQuery (text, bodyRule, headingsRule) {
 	const families = [bodyRule, headingsRule]
 		.map(parseRule)
 		.map(attachText)
+		.filter(rule => rule)
 		.map(attachInlineStyles)
 		.reduce(mergeByFamily, [])
 		.map(uniqueVariations)
@@ -26,18 +27,18 @@ function rulesToQuery (text, bodyRule, headingsRule) {
 
 		const familyMatch = familyPattern.exec(rule);
 		if (!familyMatch) return;
-
 		const weightMatch = weightPattern.exec(rule) || [];
 		const styleMatch = stylePattern.exec(rule) || [];
 
 		return {
-			family: familyMatch[0],
-			weight: weightMatch[0],
+			family: familyMatch[1],
+			weight: resolveWeight(weightMatch[0]),
 			style: styleMatch[0]
 		};
 	}
 
-	function attachText (rule = {}, index) {
+	function attachText (rule, index) {
+		if (!rule) return;
 		return Object.assign({}, rule, {
 			text: texts[index]
 		});
@@ -153,12 +154,12 @@ function bodyFontVariants (text, weight, style) {
 	}
 }
 
-function resolveWeight (weight, context = 400) {
-	switch (weight) {
+function resolveWeight (value = 'normal', context = 400) {
+	switch (value) {
 		case 'lighter': return resolveLighter();
 		case 'normal': return 400;
 		case 'bolder': return resolveBolder();
-		default: return Number(weight);
+		default: return Number(value);
 	}
 
 	function resolveLighter () {
