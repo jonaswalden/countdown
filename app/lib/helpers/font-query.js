@@ -104,7 +104,6 @@ function bodyFontVariants (text, weight, style) {
 	const topContext = [weight, style];
 	const {children: nodes} = parse(text);
 	if (!nodes) return [topContext].reduce(toVariants, []);
-	console.log('body font variants', topContext);
 
 	return nodes
 		.reduce(flatten, [[]])[0]
@@ -133,7 +132,6 @@ function bodyFontVariants (text, weight, style) {
 
 	function flatten ([collection, context], node) {
 		const [contextWeight, contextStyle] = context || topContext;
-		console.log('flattening', contextWeight);
 		const isStrong = node.symbol.length === 2;
 		const variant = [
 			isStrong ? resolveWeight('bolder', contextWeight) : contextWeight,
