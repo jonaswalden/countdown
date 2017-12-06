@@ -64,8 +64,9 @@ feature('Edit event', () => {
 				if (err) return done(err);
 
 				expect(dbEvents.length).to.equal(1);
-				expect(dbEvents[0].title).to.contain(event.title);
-				expect(dbEvents[0].body).to.contain('change from test');
+				const [dbEvent] = dbEvents;
+				expect(dbEvent.title).to.contain(event.title);
+				expect(dbEvent.body).to.contain('change from test');
 				done();
 			});
 		});

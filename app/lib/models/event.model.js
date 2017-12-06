@@ -90,5 +90,4 @@ function setFontQuery () {
 	if (!textStyle) return;
 
 	textStyle.fontQuery = fontQuery(this.body, textStyle.fontBody, textStyle.fontHeading);
-	console.log(textStyle);
 }
