@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const slugify = require('slugify');
 const fontQuery = require('../helpers/font-query');
 
-const {parse: parseBody} = require('../helpers/parse-body');
+const parseBody = require('../helpers/parse-body');
 
 const backgroundStyleSchema = new mongoose.Schema({
 	color: String,
