@@ -9,9 +9,10 @@ const symbolPattern = /(_{1,2}|\*{1,2})/g;
 module.exports = rulesToQuery;
 
 function rulesToQuery (text, bodyRule, headingsRule) {
-	const texts = splitText(text);
-	if (!texts.some(t => t)) return null;
+	if (!text) return null;
+	if (!bodyRule && !headingsRule) return null;
 
+	const texts = splitText(text);
 	const families = [bodyRule, headingsRule]
 		.map(parseRule)
 		.map(attachText)
@@ -88,7 +89,7 @@ function splitText (text) {
 		const lineMatch = linePattern.exec(line);
 		const [, headingType, content] = lineMatch;
 		const typeIndex = +!!headingType;
-		texts[typeIndex] += content;
+		texts[typeIndex] += content + '\n';
 
 		return texts;
 	}

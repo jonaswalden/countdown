@@ -83,6 +83,12 @@ describe('fontQuery', () => {
 		expect(query).to.equal(null);
 	});
 
+	it('no request if no font rules', () => {
+		const query = fontQuery(basicText, '', undefined);
+
+		expect(query).to.equal(null);
+	});
+
 	const formattedText = '' +
 		'# Event _name_ __yo__!\n' +
 		'\n' +
@@ -116,6 +122,16 @@ describe('fontQuery', () => {
 		const query = fontQuery(formattedText, bodyFont, headingFont);
 
 		expect(query).to.equal('family=PT%20Sans:400,700,400italic,700italic,900');
+	});
+
+	it('doesn\'t merge tokens from the end and beginning of adjacent lines', () => {
+		const text = '*yada*\n*yada*\n*yada*';
+		const bodyFont = '400 24px/1.4 "PT Sans", sans-serif';
+		const headingFont = '400 60px/1 sans-serif';
+
+		const query = fontQuery(text, bodyFont, headingFont);
+
+		expect(query).to.equal('family=PT%20Sans:400,400italic');
 	});
 
 	it.skip('doesn\'t request variations with no direct content', () => {
