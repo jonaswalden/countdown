@@ -7,10 +7,10 @@
 	<ul class="list">
 		{{#each events}}
 			<li class="event-item">
-				<div class="event-item__details">
-					<a class="event-item__link" href="/event/{{this.slug}}/">{{this.title}}</a>
+				<a class="event-item__details" href="/event/{{this.slug}}/">
+					<div><strong>{{this.title}}</strong></div>
 					<time>{{dateTime this.start}}</time>
-				</div>
+				</a>
 
 				<a class="button button--slim" href="/event/edit/{{this.slug}}/">Edit</a>
 			</li>
