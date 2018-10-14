@@ -10,7 +10,6 @@ module.exports = rulesToQuery;
 
 function rulesToQuery (text, bodyRule, headingsRule) {
 	const texts = splitText(text);
-	console.log(texts);
 	const families = [bodyRule, headingsRule]
 		.map(parseRule)
 		.map(attachText)
