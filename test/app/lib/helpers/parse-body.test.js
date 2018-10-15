@@ -3,19 +3,22 @@
 const parseBody = require('../../../../app/lib/helpers/parse-body');
 
 describe('parseBody', () => {
-	describe('parseMd', () => {
-		it('should compile markdown to markup', () => {
-			const markdown = 'yada __yada__ *yada*';
-			const markup = parseBody.parseMd(markdown);
-			expect(markup).to.equal('<p>yada <strong>yada</strong> <em>yada</em></p>\n');
-		});
-	});
-
-	describe('parsePseudo', () => {
-		it('should parse input pseudo code to handlebars code', () => {
-			const pseudo = 'yada {{ticker}} yada {{ticker}} yada';
-			const hbs = parseBody.parsePseudo(pseudo);
-			expect(hbs).to.equal('yada {{> ticker start=start format=style.tickerFormat}} yada {{> ticker start=start format=style.tickerFormat}} yada');
-		});
+	it('should compile markdown to markup', () => {
+		const markup = parseBody(
+			'# {{title}}\n' +
+			'\n' +
+			'{{ticker}}\n' +
+			'\n' +
+			'yada **yada** _yada_\n' +
+			'yada\n' +
+			'\n'+
+			'## Heading level 2'
+		);
+		expect(markup).to.equal(
+			'<h1>{{title}}</h1>' +
+			'<p>{{> ticker start=start format=style.tickerFormat}}</p>\n'+
+			'<p>yada <strong>yada</strong> <em>yada</em><br>yada</p>\n' +
+			'<h2>Heading level 2</h2>'
+		);
 	});
 });

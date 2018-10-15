@@ -4,8 +4,8 @@
   "description": "0.1.0",
   "main": "app/app.js",
   "scripts": {
-    "fixlint": "eslint --fix **/*.js",
-    "lint": "eslint **/*.js",
+    "fixlint": "eslint --fix .",
+    "lint": "eslint .",
     "start": "npm run serve:site",
     "test": "npm run lint & mocha test/**/*.js",
     "serve:dev": "run-p serve:site serve:assets",

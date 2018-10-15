@@ -67,13 +67,11 @@ feature('Ticker', () => {
 
 		given('it is 08:00:00:0000 on January 1st, 2017', () => {
 			currentDate = new Date(2017, 0, 1, 9);
-			console.log(currentDate);
 			ck.freeze(currentDate);
 		});
 
 		and('we want to count down to 08:00:00:0010 on the same day', () => {
 			targetDate = new Date(2017, 0, 1, 9, 0, 0, 10);
-			console.log(targetDate);
 		});
 
 		and('we want the output in seconds and minutes', () => {
@@ -81,7 +79,7 @@ feature('Ticker', () => {
 		});
 
 		when('when we start the countdown', () => {
-			updateFunc = chai.spy((...args) => console.log('callback', ...args));
+			updateFunc = chai.spy();
 			Ticker(targetDate, templateString, updateFunc);
 		});
 

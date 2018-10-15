@@ -35,6 +35,7 @@ function renderUpdate (req, res) {
 		{slug: req.params.eventSlug},
 		(err, event) => {
 			if (err) return res.send(err);
+			if (!event) return res.sendStatus(404);
 
 			res.render('pages/event-form', {
 				postPath: req.path + '?_method=PUT',
@@ -82,6 +83,7 @@ function update (req, res, next) {
 
 	async function found (err, event) {
 		if (err) return next(err);
+		if (!event) return res.sendStatus(404);
 
 		try {
 			await handleFormData(req, event);

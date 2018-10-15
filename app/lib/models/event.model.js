@@ -1,12 +1,11 @@
 'use strict';
 
-const _ = require('lodash');
 const moment = require('moment');
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 const fontQuery = require('../helpers/font-query');
 
-const {parse: parseBody} = require('../helpers/parse-body');
+const parseBody = require('../helpers/parse-body');
 
 const backgroundStyleSchema = new mongoose.Schema({
 	color: String,
@@ -16,12 +15,9 @@ const backgroundStyleSchema = new mongoose.Schema({
 const textStyleSchema = new mongoose.Schema({
 	color: String,
 	fontHeading: String,
-	fontBody: String
+	fontBody: String,
+	fontQuery: String
 });
-
-textStyleSchema
-	.virtual('fontQuery')
-	.get(getFontQueryFromFonts);
 
 const eventStyleSchema = new mongoose.Schema({
 	background: backgroundStyleSchema,
@@ -63,11 +59,14 @@ eventSchema
 	.get(getStartStringFromStart)
 	.set(setStartFromStartString);
 
-module.exports = mongoose.model('Event', eventSchema);
+eventSchema.pre('save', function (next) {
+	setFontQuery.call(this);
+	next();
+});
 
-function getFontQueryFromFonts () {
-	return fontQuery(this.fontBody, this.fontHeading);
-}
+// eventSchema.methods.setFontQuery = setFontQuery;
+
+module.exports = mongoose.model('Event', eventSchema);
 
 function getStartStringFromStart () {
 	return moment(this.start).format('YYYY-MM-DD HH:mm');
@@ -84,4 +83,11 @@ function getBodyMarkup () {
 function setSlugFromTitle (title) {
 	this.slug = slugify(title).toLowerCase();
 	return title;
+}
+
+function setFontQuery () {
+	const textStyle = this.style && this.style.text;
+	if (!textStyle) return;
+
+	textStyle.fontQuery = fontQuery(this.body, textStyle.fontBody, textStyle.fontHeading);
 }

@@ -4,11 +4,14 @@ const familyPattern = /["'](.+?)["']/;
 const weightPattern = /[1-9]00|light(?:er)?|normal|bold(?:er)?/;
 const stylePattern = /italic/;
 const linePattern = /^(#{1,6})?\s*(.*)/;
-const symbolPattern = /([_*]{1,2})/g;
+const symbolPattern = /(_{1,2}|\*{1,2})/g;
 
 module.exports = rulesToQuery;
 
 function rulesToQuery (text, bodyRule, headingsRule) {
+	if (!text) return null;
+	if (!bodyRule && !headingsRule) return null;
+
 	const texts = splitText(text);
 	const families = [bodyRule, headingsRule]
 		.map(parseRule)
@@ -46,8 +49,7 @@ function rulesToQuery (text, bodyRule, headingsRule) {
 	function attachInlineStyles (rule) {
 		return {
 			family: rule.family,
-			text: rule.text,
-			variations: bodyFontVariants(rule.text, rule.weight, rule.style)
+			variations: getFontVariations(rule.text, rule.weight, rule.style)
 		};
 	}
 
@@ -74,13 +76,7 @@ function rulesToQuery (text, bodyRule, headingsRule) {
 	}
 
 	function toQueryString (rule) {
-		let query = encodeURIComponent(rule.family);
-		const variations = rule.variations.join(',');
-		if (variations) {
-			query += ':' + variations;
-		}
-
-		return query;
+		return encodeURIComponent(rule.family) + ':' + rule.variations.join(',');
 	}
 }
 
@@ -93,20 +89,21 @@ function splitText (text) {
 		const lineMatch = linePattern.exec(line);
 		const [, headingType, content] = lineMatch;
 		const typeIndex = +!!headingType;
-		texts[typeIndex] += content;
+		texts[typeIndex] += content + '\n';
 
 		return texts;
 	}
 }
 
-function bodyFontVariants (text, weight, style) {
+function getFontVariations (text, weight, style) {
 	const topContext = [weight, style];
 	const {children: nodes} = parse(text);
-	if (!nodes) return [topContext].reduce(toVariants, []);
+	const variations = [topContext];
+	if (nodes) {
+		variations.push(...nodes.reduce(flatten, [[]])[0]);
+	}
 
-	return nodes
-		.reduce(flatten, [[]])[0]
-		.reduce(toVariants, []);
+	return variations.map(toString);
 
 	function parse(string, tree = {}, open = null) {
 		const symbolMatch = symbolPattern.exec(string);
@@ -147,15 +144,12 @@ function bodyFontVariants (text, weight, style) {
 		return [collection];
 	}
 
-	function toVariants (collection, attrs) {
-		const variant = attrs.join('');
-		if (variant) collection.push(variant);
-		return collection;
+	function toString (attrs) {
+		return attrs.join('');
 	}
 }
 
 function resolveWeight (value = 'normal', context = 400) {
-	console.log('resolving weight', value, context);
 	switch (value) {
 		case 'lighter': return resolveLighter();
 		case 'normal': return 400;
