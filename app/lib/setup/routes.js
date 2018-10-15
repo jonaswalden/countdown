@@ -4,7 +4,6 @@ const {Router} = require('express');
 
 const eventController = require('../controllers/event.controller');
 const fileHandler = require('../setup/files');
-const handleImage = require('../helpers/handle-image');
 
 module.exports = setup;
 

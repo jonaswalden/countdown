@@ -14,7 +14,6 @@ module.exports.removeImage = removeImage;
 module.exports.getImagePath = getImagePath;
 
 function handleImage (file) {
-	console.log('file', file);
 	return new Promise((...p) => processImage(file, ...p));
 }
 
@@ -68,14 +67,12 @@ function processImage (file, resolve, reject) {
 	}
 
 	function rollback (imageErr) {
-		fs.rmdir(imageDirPath, dirErr => console.error(dirErr));
+		fs.rmdir(imageDirPath);
 		reject(imageErr);
 	}
 
 	function cleanTemp () {
-		fs.unlink(file.path, err => {
-			if (err) console.error(err);
-		});
+		fs.unlink(file.path);
 	}
 }
 

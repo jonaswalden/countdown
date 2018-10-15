@@ -134,7 +134,6 @@ function seed (req, res) {
 
 	Promise.all(insertions).then(() => {
 		if (errors.length) return res.send(new Error('error removing'));
-		console.log('seeding done');
 		res.redirect('/events/');
 	});
 }

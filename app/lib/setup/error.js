@@ -1,17 +1,16 @@
 'use strict';
 
-module.exports = setup;
+const logger = require('./logger');
 
-function setup (app) {
+module.exports = function setup (app) {
 	app.use(handleError);
-}
+};
 
 function handleError (err, req, res, next) {
-	console.log('error handler');
-	if (!err) return next();
-	console.log('my daddy once coddan erro with his be hends');
-	console.error(err);
-	res.send(`
+	if (!err) return next(err);
+
+	logger.error(err);
+	res.send(500, `
 		<h1>Oh noes!</h1>
 		<h2>${err.message}</h2>
 		<pre>${err.trace}</pre>

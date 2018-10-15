@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const logger = require('./logger');
 
 let connection;
 
@@ -32,5 +33,5 @@ function getConnection () {
 }
 
 function setupErrorHandling () {
-	mongoose.connection.on('error', err => console.error(err));
+	mongoose.connection.on('error', err => logger.error(err));
 }

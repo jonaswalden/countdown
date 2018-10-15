@@ -9,7 +9,7 @@ const uploadFile = require('../../../helpers/upload-file');
 
 describe('event model', () => {
 	const requiredProps = ['body', 'startString', 'title'];
-	const optionalProps = ['style', 'backgroundImage'];
+	const optionalProps = ['style'];
 	const autoProps = ['slug', 'start'];
 	const allProps = [].concat(requiredProps, optionalProps, autoProps);
 
@@ -34,7 +34,7 @@ describe('event model', () => {
 		});
 
 		it('has all expected props', () => {
-			expect(Object.keys(eventData)).to.have.same.members(...allProps);
+			expect(Object.keys(eventData)).to.have.same.members(allProps);
 		});
 	});
 
@@ -62,7 +62,7 @@ describe('event model', () => {
 
 		allProps.forEach(prop => {
 			if (requiredProps.includes(prop)) {
-				it(`is invalid if required prop ${prop} is missing`, done => {
+				it(`is invalid if required prop "${prop}" is missing`, done => {
 					delete fullEventData[prop];
 					event = new Event(fullEventData);
 
@@ -74,7 +74,7 @@ describe('event model', () => {
 				});
 			}
 			else {
-				it(`is not invalid if optional prop ${prop} is missing`, done => {
+				it(`is still valid if optional prop "${prop}" is missing`, done => {
 					delete fullEventData[prop];
 					event = new Event(fullEventData);
 
