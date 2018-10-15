@@ -1,9 +1,10 @@
 'use strict';
 
 const {Router} = require('express');
-
+const bodyParser = require('body-parser');
 const eventController = require('../controllers/event.controller');
 const fileHandler = require('../setup/files');
+const userController = require('../controllers/user.controller');
 
 module.exports = setup;
 
@@ -31,6 +32,9 @@ function getRouter () {
 	router.get('/events/seed/', eventController.seed);
 
 	router.get('/events/clear/', eventController.clear);
+
+	router.post('/user/', bodyParser.json(), userController.create);
+	router.post('/user/validate', bodyParser.json(), userController.validate);
 
 	// Default
 	router.get('/', (req, res) => {

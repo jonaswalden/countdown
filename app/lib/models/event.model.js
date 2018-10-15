@@ -1,11 +1,10 @@
 'use strict';
 
+const fontQuery = require('../helpers/font-query');
 const moment = require('moment');
 const mongoose = require('mongoose');
-const slugify = require('slugify');
-const fontQuery = require('../helpers/font-query');
-
 const parseBody = require('../helpers/parse-body');
+const slugify = require('slugify');
 
 const backgroundStyleSchema = new mongoose.Schema({
 	color: String,
