@@ -33,8 +33,9 @@ function getRouter () {
 
 	router.get('/events/clear/', eventController.clear);
 
-	router.post('/user/', bodyParser.json(), userController.create);
-	router.post('/user/validate', bodyParser.json(), userController.validate);
+	router.post('/user/', bodyParser.urlencoded({extended: true}), userController.create);
+	router.get('/user/', userController.authorize, userController.show);
+	router.post('/user/validate/', bodyParser.urlencoded({extended: true}), userController.validate);
 
 	// Default
 	router.get('/', (req, res) => {
