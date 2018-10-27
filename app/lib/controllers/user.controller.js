@@ -5,8 +5,8 @@ const {Cookie} = require('tough-cookie');
 
 module.exports = {
 	create,
-	validate,
 	show,
+	authenticate,
 	authorize,
 };
 
@@ -21,14 +21,16 @@ async function create (req, res, next) {
 	}
 }
 
-async function validate (req, res) {
-	const user = await User.findOne({name: req.body.name});
-	if (!user) return res.sendStatus(401);
-	if (!user.validatePassphrase(req.body.passphrase)) return res.sendStatus(401);
+async function show (req, res) {
 	res.sendStatus(200);
 }
 
-async function show (req, res) {
+async function authenticate (req, res) {
+	const user = await User.findOne({name: req.body.name});
+	if (!user) return res.sendStatus(401);
+	if (!user.validatePassphrase(req.body.passphrase)) return res.sendStatus(401);
+
+	res.cookie('id', 1);
 	res.sendStatus(200);
 }
 

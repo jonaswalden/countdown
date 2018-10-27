@@ -4,85 +4,66 @@ const User = require('../../app/lib/models/User');
 const app = require('../../app/app');
 const request = require('supertest');
 
-feature('authentication', () => {
-	scenario('create a new user', () => {
+feature('user', () => {
+	scenario('new user', () => {
 		before(() => User.remove({}));
 
-		let response;
-		when('credentials are posted', async () => {
-			response = await request(app)
-				.post('/user/')
+		const agent = request.agent(app);
+		let signUpResponse;
+		when('user signs up', async () => {
+			signUpResponse = await agent
+				.post('/user/sign-up/')
 				.send('name=janedoe')
 				.send('passphrase=somesecretphrase');
 		});
 
-		then('user was created', () => {
-			expect(response.status).to.equal(201);
+		then('sign up success', () => {
+			expect(signUpResponse.status).to.equal(201);
 		});
 
-		when('validating matching credentials', async () => {
-			response = await request(app)
-				.post('/user/validate')
+		let pageResponse;
+		when('visiting a user-only route', async () => {
+			pageResponse = await agent.get('/user/');
+		});
+
+		then('authorization success', () => {
+			expect(pageResponse.status).to.equal(200);
+		});
+	});
+
+	scenario('existing user', () => {
+		before(() => User.remove({}));
+
+		let user;
+		given('a registered user exists', () => {
+			user = new User({
+				name: 'janedoe',
+				passphrase: 'somesecretphrase'
+			});
+
+			return user.save();
+		});
+
+		const agent = request.agent(app);
+		let signInResponse;
+		when('signing in', async () => {
+			signInResponse = await agent
+				.post('/user/sign-in/')
 				.send('name=janedoe')
 				.send('passphrase=somesecretphrase');
 		});
 
-		then('success', () => {
-			expect(response.status).to.equal(200);
+		then('authentication success', () => {
+			expect(signInResponse.status).to.equal(200);
 		});
 
-		when('validating non-matching credentials', async () => {
-			response = await request(app)
-				.post('/user/validate')
-				.send('name=janedoe')
-				.send('passphrase=wrongsecretphrase');
+		let pageResponse;
+		when('visiting a user-only route', async () => {
+			pageResponse = await agent.get('/user/');
 		});
 
-		then('fail', () => {
-			expect(response.status).to.equal(401);
-		});
-	});
-});
-
-feature('authorization', () => {
-	scenario('accepted', () => {
-		before(() => User.remove({}));
-
-		const agent = request.agent(app);
-		given('an authenticated user', () => {
-			return agent
-				.post('/user/')
-				.send('name=janedoe')
-				.send('passphrase=somesecretphrase')
-				.expect(201)
-				.expect('set-cookie', /^id=/);
-		});
-
-		let response;
-		when('visiting a route requiring authorization', async () => {
-			response = await agent.get('/user/');
-		});
-
-		then('success', () => {
-			expect(response.status).to.equal(200);
-		});
-	});
-
-	scenario('denied', () => {
-		before(() => User.remove({}));
-
-		const agent = request.agent(app);
-		given('no authenticated user', () => {
-			// noop
-		});
-
-		let response;
-		when('visiting a route in need of authorization', async () => {
-			response = await agent.get('/user/');
-		});
-
-		then('fail', () => {
-			expect(response.status).to.equal(403);
+		then('authorization success', () => {
+			expect(pageResponse.status).to.equal(200);
 		});
 	});
 });
