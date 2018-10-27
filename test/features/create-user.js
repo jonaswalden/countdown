@@ -2,16 +2,16 @@
 
 const User = require('../../app/lib/models/User');
 const app = require('../../app/app');
-const request = require('supertest');
+const supertest = require('supertest');
 
 feature('user', () => {
 	scenario('new user', () => {
 		before(() => User.remove({}));
 
-		const agent = request.agent(app);
-		let signUpResponse;
+		let request, signUpResponse;
 		when('user signs up', async () => {
-			signUpResponse = await agent
+			request = supertest.agent(app);
+			signUpResponse = await request
 				.post('/user/sign-up/')
 				.send('name=janedoe')
 				.send('passphrase=somesecretphrase');
@@ -23,7 +23,7 @@ feature('user', () => {
 
 		let pageResponse;
 		when('visiting a user-only route', async () => {
-			pageResponse = await agent.get('/user/');
+			pageResponse = await request.get('/user/');
 		});
 
 		then('authorization success', () => {
@@ -44,10 +44,10 @@ feature('user', () => {
 			return user.save();
 		});
 
-		const agent = request.agent(app);
-		let signInResponse;
+		let request, signInResponse;
 		when('signing in', async () => {
-			signInResponse = await agent
+			request = supertest.agent(app);
+			signInResponse = await request
 				.post('/user/sign-in/')
 				.send('name=janedoe')
 				.send('passphrase=somesecretphrase');
@@ -59,11 +59,23 @@ feature('user', () => {
 
 		let pageResponse;
 		when('visiting a user-only route', async () => {
-			pageResponse = await agent.get('/user/');
+			pageResponse = await request.get('/user/');
 		});
 
 		then('authorization success', () => {
 			expect(pageResponse.status).to.equal(200);
+		});
+	});
+
+	scenario('non-registered user', () => {
+		let pageResponse;
+		when('visiting a user-only route', async () => {
+			const request = supertest(app);
+			pageResponse = await request.get('/user/');
+		});
+
+		then('authorization fail', () => {
+			expect(pageResponse.status).to.equal(403);
 		});
 	});
 });
