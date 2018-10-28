@@ -35,13 +35,10 @@ feature('user', () => {
 		before(() => User.remove({}));
 
 		let user;
-		given('a registered user exists', () => {
-			user = new User({
-				name: 'janedoe',
-				passphrase: 'somesecretphrase'
-			});
-
-			return user.save();
+		given('a registered user exists', async () => {
+			user = new User({name: 'janedoe'});
+			await user.setSaltAndHashFromPassphrase('somesecretphrase');
+			await user.save();
 		});
 
 		let request, signInResponse;

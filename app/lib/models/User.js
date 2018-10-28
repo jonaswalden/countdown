@@ -19,17 +19,14 @@ const userSchema = new mongoose.Schema({
 	},
 });
 
-userSchema
-	.virtual('passphrase')
-	.set(setSaltAndHashFromPassphrase);
-
+userSchema.methods.setSaltAndHashFromPassphrase = setSaltAndHashFromPassphrase;
 userSchema.methods.validatePassphrase = validatePassphrase;
 
 module.exports = mongoose.model('User', userSchema);
 
-function setSaltAndHashFromPassphrase (passphrase) {
-	this.salt = bcrypt.genSaltSync(10);
-	this.hash = bcrypt.hashSync(passphrase, this.salt);
+async function setSaltAndHashFromPassphrase (passphrase) {
+	this.salt = await bcrypt.genSalt(10);
+	this.hash = await bcrypt.hash(passphrase, this.salt);
 }
 
 function validatePassphrase (passphrase) {

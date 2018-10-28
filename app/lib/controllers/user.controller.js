@@ -13,6 +13,7 @@ module.exports = {
 async function create (req, res, next) {
 	try {
 		const user = new User(Object.assign({}, req.body));
+		await user.setSaltAndHashFromPassphrase(req.body.passphrase);
 		await user.save();
 		res.cookie('id', 1);
 		res.sendStatus(201);
