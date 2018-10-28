@@ -9,7 +9,7 @@ module.exports = function setup (app) {
 function handleError (err, req, res, next) {
 	if (!err) return next(err);
 
-	const status = err.status || 500;
 	logger.error(err);
+	const status = err.status || 500;
 	res.status(status).send(err);
 }

@@ -1,7 +1,9 @@
 'use strict';
 
-const User = require('../models/User');
 const {Cookie} = require('tough-cookie');
+const	{secret} = require('../../config');
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
 module.exports = {
 	create,
@@ -15,7 +17,8 @@ async function create (req, res, next) {
 		const user = new User(Object.assign({}, req.body));
 		await user.setSaltAndHashFromPassphrase(req.body.passphrase);
 		await user.save();
-		res.cookie('id', 1);
+		const token =  jwt.sign({id: user._id}, secret, {expiresIn: '1y'});
+		res.cookie('id', token);
 		res.sendStatus(201);
 	} catch (err) {
 		next(err);
@@ -31,7 +34,8 @@ async function authenticate (req, res) {
 	if (!user) return res.sendStatus(401);
 	if (!user.validatePassphrase(req.body.passphrase)) return res.sendStatus(401);
 
-	res.cookie('id', 1);
+	const token =  jwt.sign({id: user._id}, secret, {expiresIn: '1y'});
+	res.cookie('id', token);
 	res.sendStatus(200);
 }
 
@@ -40,7 +44,7 @@ function authorize (req, res, next) {
 	if (!header) return res.sendStatus(403);
 
 	const cookie = Cookie.parse(header);
-	if (cookie.key === 'id' && cookie.value === '1') return next();
+	if (cookie.key === 'id' && jwt.verify(cookie.value, secret)) return next();
 
 	res.sendStatus(403);
 }

@@ -28,6 +28,7 @@
     "express-handlebars": "^3.0.0",
     "gm": "^1.23.0",
     "helmet": "^3.0.0",
+    "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "method-override": "^2.3.9",
