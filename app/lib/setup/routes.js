@@ -18,19 +18,16 @@ function getRouter () {
 
 	// Events
 	router.get('/events/', eventController.renderAll);
-
 	router.get('/events/create/', eventController.renderCreate);
 	router.post('/events/create/', handleBackgroundImage, eventController.create);
 
 	// Event
 	router.get('/event/:eventSlug/', eventController.renderSingle);
-
 	router.get('/event/edit/:eventSlug/', eventController.renderUpdate);
 	router.put('/event/edit/:eventSlug/', handleBackgroundImage, eventController.update);
 
   // Debug/dev
 	router.get('/events/seed/', eventController.seed);
-
 	router.get('/events/clear/', eventController.clear);
 
 	// Default

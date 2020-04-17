@@ -41,12 +41,12 @@ feature('View event', () => {
 			const stylesheet = $('style');
 			const styles = stylesheet.html();
 
-			expect(styles).to.include(`color: ${event.style.text.color};`);
-			expect(styles).to.include(`font: ${event.style.text.fontBody};`);
-			expect(styles).to.include(`font: ${event.style.text.fontHeading};`);
+			expect(styles).to.include(`color:${event.style.text.color};`);
+			expect(styles).to.include(`font:${event.style.text.fontBody};`);
+			expect(styles).to.include(`font:${event.style.text.fontHeading};`);
 
-			expect(styles).to.include(`background-color: ${event.style.background.color};`);
-			expect(styles).to.include(`background-image: url(${event.style.background.image});`);
+			expect(styles).to.include(`background-color:${event.style.background.color};`);
+			expect(styles).to.include(`background-image:url(${event.style.background.image});`);
 		});
 	});
 });
