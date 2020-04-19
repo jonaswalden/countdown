@@ -1,59 +1,52 @@
 'use strict';
 
-const moment = require('moment');
-const slugify = require('slugify');
-
 const Event = require('../../../../app/lib/models/event.model');
 const factory = require('../../../helpers/factories');
 const uploadFile = require('../../../helpers/upload-file');
+const slugify = require('slugify');
+
+const requiredProps = ['body', 'dateString', 'title'];
+const optionalProps = ['style', 'timeString'];
+const allProps = [].concat(requiredProps, optionalProps);
+const autoProps = {
+	title: 'slug',
+	dateString: 'start',
+};
 
 describe('event model', () => {
-	const requiredProps = ['body', 'startString', 'title'];
-	const optionalProps = ['style', 'backgroundImage'];
-	const autoProps = ['slug', 'start'];
-	const allProps = [].concat(requiredProps, optionalProps, autoProps);
-
 	after(done => {
 		Event.remove({}, done);
 	});
 
 	describe('full event', () => {
-		let event, eventData;
+		let eventData;
 
 		beforeEach(async () => {
-			eventData = await EventData();
+			eventData = await factory.attrs('event');
+			await uploadFile(eventData, 'style.background.image');
 		});
 
 		it('is valid', (done) => {
-			event = new Event(eventData);
-
-			event.save(err => {
-				expect(err).not.to.exist;
-				done();
-			});
+			const event = new Event(eventData);
+			event.save(done);
 		});
 
 		it('has all expected props', () => {
-			expect(Object.keys(eventData)).to.have.same.members(...allProps);
+			expect(Object.keys(eventData)).to.have.same.members(allProps);
 		});
 	});
 
 	describe('minimal event', async () => {
-		let event, eventData, fullEventData;
+		let eventData, fullEventData;
 
 		beforeEach(async () => {
-			eventData = await EventData({}, true);
-			fullEventData = await EventData();
+			eventData = await factory.attrs('event', {}, {minimal: true});
+			fullEventData = await factory.attrs('event');
 		});
 
 		it('is valid', (done) => {
-			event = new Event(eventData);
-
-			event.save(err => {
-				if (err) done(err);
-				expect(err).not.to.exist;
-				done();
-			});
+			const event = new Event(eventData);
+			event.save(done);
 		});
 
 		it('has all expected props', () => {
@@ -62,77 +55,75 @@ describe('event model', () => {
 
 		allProps.forEach(prop => {
 			if (requiredProps.includes(prop)) {
-				it(`is invalid if required prop ${prop} is missing`, done => {
+				it(`is invalid if required "${prop}" is missing`, done => {
 					delete fullEventData[prop];
-					event = new Event(fullEventData);
+					const event = new Event(fullEventData);
 
 					event.save(err => {
-						expect(err.errors).to.have.property(prop);
-						expect(err.errors[prop].properties).to.have.property('type', 'required');
+						const missingProp = autoProps[prop] || prop;
+						expect(err).to.exist;
+						expect(err.errors).to.exist;
+						expect(err.errors).to.have.property(missingProp);
+						expect(err.errors[missingProp]).to.have.property('kind', 'required');
 						done();
 					});
 				});
 			}
 			else {
-				it(`is not invalid if optional prop ${prop} is missing`, done => {
+				it(`is still valid if optional "${prop}" is missing`, done => {
 					delete fullEventData[prop];
-					event = new Event(fullEventData);
-
-					event.save(err => {
-						expect(err).not.to.exist;
-						done();
-					});
+					const event = new Event(fullEventData);
+					event.save(done);
 				});
 			}
 		});
 	});
 
 	describe('slug', () => {
-		let event, eventData;
+		let eventData;
 
 		beforeEach(async () => {
-			eventData = EventData();
+			eventData = await factory.attrs('event');
 		});
 
 		it('gets value from title', () => {
-			delete eventData.slug;
-			event = new Event(eventData);
-			expect(event).to.have.property('slug', slugify(eventData.title));
+			const event = new Event(eventData);
+			expect(eventData).to.not.have.property('slug');
+			expect(event).to.have.property('slug', slugify(eventData.title).toLowerCase());
 		});
 
 		it('is unique', done => {
 			const eventA = new Event(eventData);
+			const eventB = new Event(eventData);
 
-			eventA.save(err => {
-				expect(err).not.to.exist;
+			expect(eventA.slug).to.equal(eventB.slug);
 
-				const eventB = new Event(eventData);
-				expect(eventA.slug).to.equal(eventB.slug);
+			eventA.save(aErr => {
+				if (aErr) return done(aErr);
 
-				eventB.save(err => {
-					expect(err).to.exist;
+				eventB.save(bErr => {
+					expect(bErr).to.exist;
 					done();
 				});
 			});
 		});
 	});
 
-	describe('startString', () => {
-		let event, eventData, start, startString;
+	describe('start', () => {
+		let eventData, startString;
 
 		before(() => {
 			const nextYear = new Date().getFullYear() + 1;
 			startString = `${nextYear}-04-02 10:00`;
-			start = moment.utc(startString).toDate();
 		});
 
-		it('gets value from start', async () => {
-			eventData = await EventData({start: () => start});
-			delete eventData.startSTring;
+		it('gets value from startString', async () => {
+			eventData = await factory.attrs('event', {start: new Date().toJSON()});
 
-			event = new Event(eventData);
-			expect(event).to.have.property('startString');
-			// TODO figure out start value
+			const event = new Event(eventData);
+			expect(eventData).to.not.have.property('start');
+			expect(event).to.have.property('start');
+			expect(event.start.toJSON()).to.equal(new Date(startString).toJSON());
 		});
 
 		it('sets value to start', async () => {
@@ -145,10 +136,3 @@ describe('event model', () => {
 		});
 	});
 });
-
-async function EventData (data = {}, minimal = false) {
-	const opts = {minimal};
-	const eventData = await factory.attrs('event', data, opts);
-	await uploadFile(eventData, 'backgroundImage');
-	return eventData;
-}

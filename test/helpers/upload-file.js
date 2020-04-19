@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid/v4');
@@ -8,15 +9,15 @@ const {uploadsDir} = require('../../app/lib/setup/files');
 
 module.exports = uploadFile;
 
-async function uploadFile (doc, propName) {
-	const filePath = doc[propName];
+async function uploadFile (doc, propPath) {
+	const filePath = _.get(doc, propPath);
 	if (!filePath) return;
+
 	const file = await mockFile(filePath);
-	doc[propName] = file;
+	_.set(doc, propPath, file.path);
 }
 
 async function mockFile (filePath) {
-	console.log('~uploading', filePath);
 	const readPath = path.join(process.cwd(), filePath);
 	const fileName = path.basename(readPath);
 	const writePath = path.join(uploadsDir, uuid());

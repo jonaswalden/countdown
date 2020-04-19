@@ -1,8 +1,11 @@
 'use strict';
 
-const {factory} = require('factory-girl');
-
 const Event = require('../../app/lib/models/event.model');
+const FactoryGirl = require('factory-girl');
+
+const {factory, MongooseAdapter} = FactoryGirl;
+
+factory.setAdapter(new MongooseAdapter());
 
 factory.define('event', Event, buildOptions => {
 	const eventCount = factory.seq('Event.id', n => n)();
