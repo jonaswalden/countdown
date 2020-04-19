@@ -1,41 +1,42 @@
 fieldset {
 	border: none;
-	padding: 0 0 0 0.5em;
+	padding: 0 0 0 1em;
 }
 
 legend {
-	display: block;
-	margin: 0 0 0 -0.5em;
+	margin: 0 0 0 -1em;
 }
 
-legend,
-label,
 input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="file"],
 textarea {
-	padding: 0.1em;
 	line-height: inherit;
-	border: solid rgba($c-text, 0.5);
-	border-width: 0 0 1px;
-}
-
-legend,
-label {
-	padding-left: 0;
-	border-color: transparent;
-}
-
-input[type="text"],
-textarea {
 	color: inherit;
+	border: solid $c-text;
+	background-color: transparent;
+	box-shadow: 0 0 0 0.35em transparent;
 	transition: 0.2s ease;
-	transition-property: color, border-color;
+	transition-property: color, background-color, border-color, box-shadow;
 
 	&:focus,
 	&:active {
 		outline: none;
 		color: $c-highlight;
 		border-color: $c-highlight;
+		background-color: $c-highlight-bg;
+		box-shadow: 0 0 0 0.35em $c-highlight-bg;
 	}
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="file"] {
+	border-width: 0 0 1px;
+	height: 1.75em;
+	padding: 0 0.1em;
 }
 
 input[type="color"] {
@@ -46,12 +47,13 @@ input[type="color"] {
 
 textarea {
 	border-width: 1px;
-	padding: 0.5em;
+	padding-left: 0.5em;
+	resize: vertical;
 }
 
 ::placeholder {
 	color: inherit;
-	opacity: 0.7;
+	opacity: 0.5;
 }
 
 .form {
@@ -63,44 +65,48 @@ textarea {
 	&__input-group {
 		display: flex;
 		min-width: 20em;
+		align-items: baseline;
 
 		label {
 			margin-right: 0.5em;
 			display: block;
 			white-space: nowrap;
+			order: -1;
+		}
+
+		:required ~ label::after {
+			content: "*";
+			color: #f06;
 		}
 
 		input[type="text"],
-		textarea {
-			width: 3em;
+		input[type="date"],
+		input[type="time"],
+		input[type="file"] {
+			width: 10em;
 			flex-grow: 1;
 		}
 
-		input[type="text"] + input[type="text"] {
+		input + input {
 			margin-left: 1em;
 		}
 
-		textarea {
-			width: auto;
-		}
-
-		&--multi-line {
+		&--vertical {
 			flex-direction: column;
-		}
+			align-items: stretch;
+			padding-top: 0.15em;
 
-		&--multi-line label {
-			margin-bottom: 0.5em;
+			label {
+				margin-bottom: 0.15em;
+			}
 		}
 	}
 
 	&__actions {
-		position: sticky;
-		bottom: 0;
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-		margin-top: 1em;
+		margin-top: 1em 0;
 		padding: 1em 0;
-		background-image: linear-gradient(rgba($c-background, 0), rgba($c-background, 1));
 	}
 }
