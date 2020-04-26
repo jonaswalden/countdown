@@ -1,10 +1,8 @@
 'use strict';
 
 const {Router} = require('express');
-
 const eventController = require('../controllers/event.controller');
 const fileHandler = require('../setup/files');
-const handleImage = require('../helpers/handle-image');
 
 module.exports = setup;
 
@@ -26,7 +24,7 @@ function getRouter () {
 	router.get('/event/edit/:eventSlug/', eventController.renderUpdate);
 	router.put('/event/edit/:eventSlug/', handleBackgroundImage, eventController.update);
 
-  // Debug/dev
+	// Debug/dev
 	router.get('/events/seed/', eventController.seed);
 	router.get('/events/clear/', eventController.clear);
 

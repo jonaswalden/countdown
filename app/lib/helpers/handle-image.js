@@ -3,9 +3,8 @@
 const fs = require('fs');
 const gm = require('gm');
 const path = require('path');
-const uuid = require('uuid/v4');
-
 const {getResourceDir} = require('../setup/files');
+const {v4: uuid} = require('uuid');
 
 const imageRoot = 'images';
 
@@ -14,7 +13,6 @@ module.exports.removeImage = removeImage;
 module.exports.getImagePath = getImagePath;
 
 function handleImage (file) {
-	console.log('file', file);
 	return new Promise((...p) => processImage(file, ...p));
 }
 
@@ -50,9 +48,7 @@ function processImage (file, resolve, reject) {
 
 	function writeDir (done) {
 		fs.mkdir(imageDirPath, 484, (err) => {
-			// console.log('making dir');
 			if (err) return reject(err);
-			// console.log('making dir - success');
 			done();
 		});
 	}

@@ -3,9 +3,8 @@
 const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
-const uuid = require('uuid/v4');
-
 const {uploadsDir} = require('../../app/lib/setup/files');
+const {v4: uuid} = require('uuid');
 
 module.exports = uploadFile;
 

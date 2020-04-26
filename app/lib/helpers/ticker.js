@@ -1,8 +1,9 @@
 'use strict';
 
 const moment = require('moment');
+const momentDurationFormatSetup = require('moment-duration-format');
 
-require('moment-duration-format');
+momentDurationFormatSetup(moment);
 
 module.exports = Ticker;
 module.exports.TimeLeft = TimeLeft;

@@ -4,20 +4,23 @@ const moment = require('moment');
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 const fontQuery = require('../helpers/font-query');
-
 const parseBody = require('../helpers/parse-body');
+
+const schemaOptions = {
+	toObject: {getters: true}
+};
 
 const backgroundStyleSchema = new mongoose.Schema({
 	color: String,
 	image: String
-});
+}, schemaOptions);
 
 const textStyleSchema = new mongoose.Schema({
 	color: String,
 	fontHeading: String,
 	fontBody: String,
 	fontQuery: String
-});
+}, schemaOptions);
 
 const eventStyleSchema = new mongoose.Schema({
 	background: backgroundStyleSchema,
@@ -26,7 +29,7 @@ const eventStyleSchema = new mongoose.Schema({
 		type: String,
 		default: '{{hh}}:{{mm}}'
 	}
-});
+}, schemaOptions);
 
 const eventSchema = new mongoose.Schema({
 	body: {
@@ -48,7 +51,7 @@ const eventSchema = new mongoose.Schema({
 		required: true,
 		set: setSlugFromTitle
 	}
-});
+}, schemaOptions);
 
 eventSchema
 	.virtual('bodyMarkup')

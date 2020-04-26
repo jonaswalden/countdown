@@ -45,10 +45,7 @@ function CompileEventBody () {
 	localHbs.handlebars.registerHelper('jsonDate', jsonDate);
 	localHbs.handlebars.registerHelper('timeLeft', timeLeft);
 
-	return compile;
-
-	function compile (template, context) {
-		if (!template  || !context) return console.error('compileEventBody', template, context);
+	return function compile (template, context) {
 		return localHbs.handlebars.compile(template)(context);
-	}
+	};
 }

@@ -16,9 +16,9 @@ module.exports = {
 	update
 };
 
-function renderAll (req, res) {
+function renderAll (req, res, next) {
 	Event.find((err, events) => {
-		if (err) return res.send(err);
+		if (err) return next(err);
 		res.render('pages/events', {events});
 	});
 }
@@ -30,30 +30,29 @@ function renderCreate (req, res) {
 	});
 }
 
-function renderUpdate (req, res) {
+function renderUpdate (req, res, next) {
 	Event.findOne(
 		{slug: req.params.eventSlug},
 		(err, event) => {
-			if (err) return res.send(err);
+			if (err) return next(err);
 			if (!event) return res.sendStatus(404);
 
 			res.render('pages/event-form', {
 				postPath: req.path + '?_method=PUT',
 				title: 'Editing event',
-				event
+				event: event.toObject(),
 			});
 		}
 	);
 }
 
-function renderSingle (req, res) {
+function renderSingle (req, res, next) {
 	Event.findOne(
 		{slug: req.params.eventSlug},
 		(err, event) => {
-			if (err) return res.send(err);
+			if (err) return next(err);
 			if (!event) return res.sendStatus(404);
-
-			res.render('pages/event', {event});
+			res.render('pages/event', {event: event.toObject()});
 		}
 	);
 }
@@ -134,7 +133,6 @@ function seed (req, res) {
 
 	Promise.all(insertions).then(() => {
 		if (errors.length) return res.send(new Error('error removing'));
-		console.log('seeding done');
 		res.redirect('/events/');
 	});
 }
