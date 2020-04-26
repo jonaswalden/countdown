@@ -1,0 +1,32 @@
+.event {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-height: 100vh;
+	background-size: cover;
+	background-position: center;
+}
+
+.event ._body {
+	max-width: 40em;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.event ul,
+.event ol {
+	list-style-type: none;
+	display: inline-flex;
+	text-align: left;
+	flex-direction: column;
+	padding-left: 0;
+}
+
+.event ul > li::before {
+	content: '‒ ';
+}
+
+.event ::selection {
+	color: inherit;
+	background: hsla(0, 0, 50%, 0.5);
+}

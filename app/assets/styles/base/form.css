@@ -1,0 +1,105 @@
+@custom-selector :--textfield input[type="text"], input[type="date"], input[type="time"], input[type="file"];
+
+fieldset {
+	border: none;
+	padding: 0 0 0 1em;
+}
+
+legend {
+	margin: 0 0 0 -1em;
+}
+
+:--textfield,
+textarea {
+	line-height: inherit;
+	color: inherit;
+	border: solid var(--c-text);
+	background-color: transparent;
+	box-shadow: 0 0 0 0.35em transparent;
+	transition: 0.2s ease;
+	transition-property: color, background-color, border-color, box-shadow;
+}
+
+:--textfield {
+	border-width: 0 0 1px;
+	height: 1.75em;
+	padding: 0 0.1em;
+}
+
+textarea {
+	border-width: 1px;
+	padding-left: 0.5em;
+	resize: vertical;
+}
+
+:--textfield:focus,
+textarea:focus,
+:--textfield:active,
+textarea:active {
+	outline: none;
+	color: var(--c-highlight);
+	border-color: var(--c-highlight);
+	background-color: var(--c-highlight-bg);
+	box-shadow: 0 0 0 0.35em var(--c-highlight-bg);
+}
+
+input[type="color"] {
+	padding: 0;
+	border: none;
+	background: transparent;
+}
+
+::placeholder {
+	color: inherit;
+	opacity: 0.5;
+}
+
+form ._cluster,
+form ._row, {
+	margin: 1em 0;
+}
+
+form ._row {
+	display: flex;
+	min-width: 20em;
+	align-items: baseline;
+}
+
+form ._row label {
+	margin-right: 0.5em;
+	display: block;
+	white-space: nowrap;
+	order: -1;
+}
+
+form ._row :required ~ label::after {
+	content: "*";
+	color: var(--c-signal-red);
+}
+
+form ._row :--textfield {
+	width: 10em;
+	flex-grow: 1;
+}
+
+form ._row input + input {
+	margin-left: 1em;
+}
+
+form ._row.-vertical {
+	flex-direction: column;
+	align-items: stretch;
+	padding-top: 0.15em;
+}
+
+form ._row.-vertical label {
+	margin-bottom: 0.15em;
+}
+
+form ._actions {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	margin-top: 1em 0;
+	padding: 1em 0;
+}

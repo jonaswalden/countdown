@@ -4,7 +4,6 @@
   "description": "0.1.0",
   "main": "app/app.js",
   "scripts": {
-    "fixlint": "eslint --fix .",
     "lint": "eslint .",
     "start": "npm run serve:site",
     "test": "npm run lint & mocha test/**/*.js",
@@ -12,10 +11,10 @@
     "serve:site": "node app/app.js",
     "serve:assets": "livereload . -p 3001 -e hbs -x app/assets/ -w 500",
     "build:scripts": "rollup -c rollup.config.js",
-    "build:styles": "stylus -I app/assets/styles -I node_modules --include-css < app/assets/styles/main.styl | postcss -o resources/bundles/styles.css",
+    "build:styles": "postcss app/assets/styles/main.css -o resources/bundles/styles.css",
     "watch:assets": "run-p watch:styles watch:scripts",
-    "watch:scripts": "chokidar app/assets/scripts/**/*.js -c \"npm run build:scripts -s\"",
-    "watch:styles": "chokidar app/assets/styles/**/*.styl -c \"npm run build:styles -s\""
+    "watch:scripts": "npm run build:scripts -- -w",
+    "watch:styles": "npm run build:styles -- -w"
   },
   "author": "Jonas Waldén",
   "license": "ISC",
@@ -42,9 +41,7 @@
     "chai": "^3.5.0",
     "chai-spies": "^0.7.1",
     "cheerio": "^0.22.0",
-    "chokidar-cli": "^1.2.0",
     "chronokinesis": "^1.3.2",
-    "css-mqpacker": "^6.0.1",
     "cssnano": "^3.10.0",
     "eslint": "^3.9.0",
     "factory-girl": "^4.2.2",
@@ -57,11 +54,11 @@
     "npm-run-all": "^4.1.1",
     "postcss": "^6.0.9",
     "postcss-cli": "^4.1.0",
+    "postcss-import": "^12.0.1",
     "rollup": "^0.47.2",
     "rollup-plugin-babel": "^3.0.1",
     "rollup-plugin-commonjs": "^8.1.0",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "stylus": "^0.54.5",
     "supertest": "^3.0.0"
   }
 }

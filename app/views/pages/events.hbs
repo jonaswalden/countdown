@@ -1,4 +1,4 @@
-<main class="page page--list">
+<main class="page">
 	<header>
 		<h1>Events</h1>
 		<a class="button" href="/events/create/">New +</a>
@@ -7,12 +7,12 @@
 	<ul class="list">
 		{{#each events}}
 			<li class="event-item">
-				<a class="event-item__details" href="/event/{{this.slug}}/">
+				<a class="_details" href="/event/{{this.slug}}/">
 					<div><strong>{{this.title}}</strong></div>
 					<time>{{dateTime this.start}}</time>
 				</a>
 
-				<a class="button button--slim" href="/event/edit/{{this.slug}}/">Edit</a>
+				<a class="button -slim" href="/event/edit/{{this.slug}}/">Edit</a>
 			</li>
 		{{/each}}
 	</ul>

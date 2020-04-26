@@ -1,0 +1,59 @@
+@custom-selector :--button button, .button;
+
+:--button {
+	display: inline-block;
+	border: 2px solid currentColor;
+	border-radius: 2px;
+	background: var(--c-background);
+	padding: 0.5em 1em 0.3em;
+	font-weight: bold;
+	line-height: inherit;
+	text-decoration: none;
+	text-align: center;
+	text-transform: uppercase;
+	box-shadow: 0 4px 0 -2px hsl(var(--c-text__code) / 20%);
+	transition-duration: 0.2s;
+	transition-timing-function: ease;
+	transition-property: color, box-shadow, transform;
+	transform: translate3d(0, 0, 0);
+	position: relative;
+}
+
+:-button::before {
+	content: '';
+	display: block;
+	position: absolute;
+	top: -2px;
+	left: -2px;
+	right: -2px;
+	bottom: -2px;
+	pointer-events: none;
+	border: 2px solid;
+	border-color: rgba(255 255 255 / 40%) rgba(255 255 255 / 25%) transparent;
+	border-radius: 2px;
+}
+
+:--button:hover,
+:--button:focus,
+:--button:active {
+	color: var(--c-highlight);
+	outline: none;
+}
+
+:--button:active {
+	transform: translate3d(0, 1px, 0);
+	box-shadow: 0 3px 0 -2px hsl(var(--c-text__raw) / 40%);
+}
+
+:--button + :--button {
+	margin-left: 1em;
+}
+
+:--button.-slim {
+	padding: 0;
+	min-width: 0;
+	border-top-width: 0;
+	border-left-width: 0;
+	border-right-width: 0;
+	box-shadow: none;
+}

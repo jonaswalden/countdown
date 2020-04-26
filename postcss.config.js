@@ -1,9 +1,11 @@
 'use strict';
 
 module.exports = {
-	map: false,
+	map: {
+		inline: false,
+	},
 	plugins: [
-		require('css-mqpacker'),
+		require('postcss-import')(),
 		require('cssnano')(),
 	]
 };

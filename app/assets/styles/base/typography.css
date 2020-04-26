@@ -1,9 +1,7 @@
-$t-line-height = 1.4;
-
 body {
 	font-family: 'courier prime', 'courier new', monospace;
-	color: $c-text;
-	line-height: $t-line-height;
+	color: var(--c-text);
+	line-height: var(--t-line-height);
 }
 
 h1 {
@@ -12,8 +10,8 @@ h1 {
 }
 
 ::selection {
-	color: $c-highlight;
-	background-color: $c-highlight-bg;
+	color: var(--c-highlight);
+	background-color: var(--c-highlight-bg);
 }
 
 a,
@@ -23,6 +21,6 @@ a:visited {
 
 a:focus,
 a:active {
-	color: $c-highlight;
+	color: var(--c-highlight);
 	outline: none;
 }

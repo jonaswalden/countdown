@@ -1,4 +1,4 @@
-<main class="page page--form">
+<main class="page">
 	<header>
 		<h1>{{title}}</h1>
 		<a href="/events/" class="button">Cancel ↶</a>
@@ -11,61 +11,61 @@
 
 		<input id="fi-timezoneoffset" name="timezoneoffset" type="hidden">
 
-		<div class="form__input-group">
+		<div class="_row">
 			<input id="fi-title" name="title" type="text" value="{{event.title}}" required>
 			<label for="fi-title">Title</label>
 		</div>
 
-		<div class="form__input-group">
+		<div class="_row">
 			<input id="fi-startString" name="startString" type="date" value="{{event.startString}}" required placeholder="Eg: 2011-04-02 11:00" onchange="window['fi-timezoneoffset'].value = (new Date()).getTimezoneOffset()">
 			<label for="fi-startString">Date</label>
 		</div>
 
-		<div class="form__input-group">
+		<div class="_row">
 			<input id="fi-startString" name="startString" type="time" value="{{event.startString}}">
 			<label for="fi-startString">Time</label>
 		</div>
 
-		<div class="form__input-group form__input-group--vertical">
+		<div class="_row -vertical">
 			<textarea id="fi-body" name="body" rows="8" required>{{event.body}}</textarea>
 			<label for="fi-body">Description</label>
 		</div>
 
-		<fieldset class="form__cluster">
+		<fieldset class="_cluster">
 			<legend>Text</legend>
 
-			<div class="form__input-group">
+			<div class="_row">
 				<input id="fi-text-color" name="style.text.color" type="color" value="{{event.style.text.color}}">
 				<label for="fi-text-color">Color</label>
 			</div>
 
-			<div class="form__input-group">
+			<div class="_row">
 				<input id="fi-text-fontBody" name="style.text.fontBody" type="text" value="{{event.style.text.fontBody}}" placeholder="Body">
 				<input id="fi-text-fontHeading" name="style.text.fontHeading" type="text" value="{{event.style.text.fontHeading}}" placeholder="Headings">
 				<label for="fi-text-fontBody">Font</label>
 			</div>
 
-			<div class="form__input-group">
+			<div class="_row">
 				<input id="fi-tickerFormat" name="style.tickerFormat" type="text" value="{{event.style.tickerFormat}}">
 				<label for="fi-tickerFormat">Ticker format</label>
 			</div>
 		</fieldset>
 
-		<fieldset class="form__cluster">
+		<fieldset class="_cluster">
 			<legend>Background</legend>
 
-			<div class="form__input-group">
+			<div class="_row">
 				<input id="fi-background-color" name="style.background.color" type="color" value="{{event.style.background.color}}">
 				<label for="fi-background-color">Color</label>
 			</div>
 
-			<div class="form__input-group">
+			<div class="_row">
 				<input id="fi-background-image" name="style.background.image" type="file">
 				<label for="fi-background-image">Image</label>
 			</div>
 		</fieldset>
 
-		<div class="form__actions">
+		<div class="_actions">
 			<button>Save ✓</button>
 		</div>
 	</form>

@@ -4,7 +4,7 @@ html {
 
 body {
 	margin: 0;
-	background-color: $c-background;
+	background-color: var(--c-background);
 }
 
 a {

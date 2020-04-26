@@ -1,0 +1,13 @@
+:root {
+	--c-text__code: 265 20% 17%;
+	--c-text: hsl(var(--c-text__code));
+
+	--c-highlight__code: 225 100% 47%;
+	--c-highlight: hsl(var(--c-highlight__code));
+	--c-highlight-bg: hsl(var(--c-highlight__code) / 70%);
+
+	--c-background: #fff;
+
+	--c-signal-red__code: 336 100% 50%;
+	--c-signal-red: hsl(var(--c-signal-red__code));
+}

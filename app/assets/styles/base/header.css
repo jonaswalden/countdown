@@ -3,9 +3,10 @@ header,
 	display: flex;
 	align-items: center;
 	margin-bottom: 1.5em;
+}
 
-	> h1 {
-		flex-grow: 1;
-		margin-bottom: -0.25em;
-	}
+header h1,
+.header h1 {
+	flex-grow: 1;
+	margin-bottom: -0.25em;
 }

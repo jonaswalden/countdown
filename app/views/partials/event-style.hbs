@@ -13,13 +13,13 @@
 		}
 	{{~/with~}}
 	{{~#with text~}}
-		.event__body > * {
+		.event ._body > * {
 			{{~#if color}}color:{{color}};{{/if}}
 			{{~#if fontBody}}font:{{{fontBody}}};{{/if~}}
 		}
 
 		{{~#with fontHeading~}}
-			.event__body h1 {
+			.event ._body h1 {
 				{{~#if this}}font:{{{this}}};{{/if~}}
 			}
 		{{~/with~}}

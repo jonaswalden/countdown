@@ -1,0 +1,8 @@
+.event-item {
+	display: flex;
+	align-items: baseline;
+}
+
+.event-item ._details {
+	flex-grow: 1;
+}
