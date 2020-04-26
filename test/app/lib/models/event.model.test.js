@@ -127,10 +127,10 @@ describe('event model', () => {
 		});
 
 		it('sets value to start', async () => {
-			eventData = await EventData({startString});
+			eventData = await factory.attrs('event', {startString});
 			delete eventData.start;
 
-			event = new Event(eventData);
+			const event = new Event(eventData);
 			expect(event).to.have.property('start');
 			// TODO figure out dates
 		});
