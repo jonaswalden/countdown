@@ -45,7 +45,7 @@
     "factory-girl": "^5.0.4",
     "mocha": "^7.1.2",
     "mocha-cakes-2": "^3.3.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "npm-run-all": "^4.1.1",
     "postcss": "^7.0.27",
     "postcss-cli": "^7.1.1",
