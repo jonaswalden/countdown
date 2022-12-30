@@ -43,7 +43,7 @@
     "cssnano": "^4.1.10",
     "eslint": "^6.8.0",
     "factory-girl": "^5.0.4",
-    "mocha": "^7.1.2",
+    "mocha": "^10.2.0",
     "mocha-cakes-2": "^3.3.0",
     "moment": "^2.24.0",
     "npm-run-all": "^4.1.1",
